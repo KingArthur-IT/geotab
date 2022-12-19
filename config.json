@@ -1,0 +1,14 @@
+{
+    "name": "Custom Button Add-In Example",
+    "supportEmail": "myname@mycompany.com",
+    "version": "1.0",
+    "items": [{
+            "page": "map",
+            "click": "https://www.hosting.com/mycompany/customButton.js",
+            "buttonName": {
+                    "en": "English Button",
+                    "fr": "French Button"
+            }
+    }],
+    "files": { }
+}
