@@ -78,6 +78,14 @@
                         }
                     }
                 });
+                const rez = api.call("Get",{
+                    "typeName": "AddInData",
+                    "search": {
+                        "addInId": addinId,
+                        "selectClause": "customer"
+                    }
+                });
+                console.log(rez);
             }
 
             return {
