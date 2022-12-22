@@ -6,59 +6,64 @@
         #center {
             text-align: center;
         }
-
-        #center ul { 
-            display: inline-block;
-            text-align: initial;
-        }
-
-
-        #vehiclesButton {
-            display: inline-block;
-        }
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
-            var center = document.getElementById("center"),
-                listCreator = function(entities) {
-                    var listElement = document.createElement("UL");
-                    listElement.appendChild(entities.reduce(function(frag, entity) {
-                        var element = document.createElement("LI");
-                        element.textContent = entity.name;
-                        element.setAttribute("data-id", entity.id);
-                        frag.appendChild(element);
-                        return frag;
-                    }, document.createDocumentFragment()));
-                    return listElement;
-                },
-                goToVehicles = function(event) {
-                    var id = event.target.getAttribute("data-id");
-                    if (id) {
-                        state.gotoPage("device", {
-                            id: id
-                        });
-                    }
-                },
-                refreshPage = function() {
-                    api.call("Get", {
-                        typeName: "Device"
-                    }, function(result) {
-                        center.addEventListener("click", goToVehicles, false);
-                        center.appendChild(listCreator(result));
-                    }, function(error) {
-                        console.log(error.message);
+            // var center = document.getElementById("center"),
+            // listCreator = function(entities) {
+            //     var listElement = document.createElement("UL");
+            //     listElement.appendChild(entities.reduce(function(frag, entity) {
+            //         var element = document.createElement("LI");
+            //         element.textContent = entity.name;
+            //         element.setAttribute("data-id", entity.id);
+            //         frag.appendChild(element);
+            //         return frag;
+            //     }, document.createDocumentFragment()));
+            //     return listElement;
+            // },
+            // goToVehicles = function(event) {
+            //     var id = event.target.getAttribute("data-id");
+            //     if (id) {
+            //         state.gotoPage("device", {
+            //             id: id
+            //         });
+            //     }
+            // },
+            // refreshPage = function() {
+            //     api.call("Get", {
+            //         typeName: "Device"
+            //     }, function(result) {
+            //         center.addEventListener("click", goToVehicles, false);
+            //         center.appendChild(listCreator(result));
+            //     }, function(error) {
+            //         console.log(error.message);
+            //     });
+            // },
+            // clearOnLeaving = function() {
+            //     center.removeEventListener("click", goToVehicles, false);
+            //     center.innerHTML = "";
+            // };
+            const clearOnLeaving = () => {
+                document.getElementById('photoBtn').removeEventListener("click", goToVehicles, false);
+            };
+            const takePhoto = () => {
+                if (api.mobile.exists())
+                    api.mobile.camera.takePicture().then((media) =>{
+                        // do something with the base64 returned
+                        console.log('media', media);
+                        document.getElementById('photo').innerHTML = media;
                     });
-                },
-                clearOnLeaving = function() {
-                    center.removeEventListener("click", goToVehicles, false);
-                    center.innerHTML = "";
-                };
+            };
+            const refreshPage = () => {
+                document.getElementById('photoBtn').addEventListener('click', () => {
+                    console.log('clicked');
+                    takePhoto();
+                })
+            }
 
             return {
                 initialize: function(api, state, callback) {
-                    document.getElementById("vehiclesButton").addEventListener("click", function() {
-                        state.gotoPage("devices");
-                    }, false);
+                    refreshPage();
                     callback();
                 },
                 focus: function(api, state) {
@@ -74,7 +79,8 @@
 <body>
     <!-- <input type="file" accept="image/*" capture=""> -->
     <div id="center">
-        <button id="vehiclesButton">Go to vehicles page</button>
+        <button id="photoBtn">Take a photo</button>
+        <div id="photo"></div>
     </div>
 </body>
 </html>
