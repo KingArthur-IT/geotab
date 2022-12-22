@@ -58,18 +58,18 @@
                         console.log('media', media);
                         document.getElementById('photo').setAttribute('src', media);
 
-                        // if (!geotab.addin.storageApiSample) {
-                        //     api.call("Add",{
-                        //         "typeName": "AddInData",
-                        //         "entity": {
-                        //             "addInId": addinId,
-                        //             "details": 
-                        //             {
-                        //                 "photo": media
-                        //             }
-                        //         }
-                        //     });
-                        // }
+                        if (!geotab.addin.storageApiSample) {
+                            api.call("Add",{
+                                "typeName": "AddInData",
+                                "entity": {
+                                    "addInId": addinId,
+                                    "details": 
+                                    {
+                                        "photo": media
+                                    }
+                                }
+                            });
+                        }
                     });
             };
             const refreshPage = () => {
@@ -96,7 +96,7 @@
                 },
                     rezult => {
                         console.log('ok', rezult)
-                        document.getElementById('info').innerHTML = rezult //[0].details.customer
+                        document.getElementById('info').innerHTML = rezult[0].details //.customer
                     }
                 );
 
