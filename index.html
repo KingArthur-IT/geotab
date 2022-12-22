@@ -82,12 +82,12 @@
                     "typeName": "AddInData",
                     "search": {
                         "addInId": addinId,
-                        // "selectClause": "customer"
+                        "selectClause": "customer"
                     }
                 },
                     rezult => {
                         console.log('ok', rezult)
-                        document.getElementById('info').innerHTML = rezult[0].details.customer
+                        document.getElementById('info').innerHTML = rezult
                     }
                 );
             }
