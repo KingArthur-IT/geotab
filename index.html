@@ -72,7 +72,7 @@
                                 document.getElementById('info').innerHTML = 'OK'
                             },
                             error => {
-                                document.getElementById('info').innerHTML = error
+                                document.getElementById('info').innerHTML = JSON.stringify(error)
                             }
                         );
                     });
