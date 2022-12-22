@@ -19,7 +19,7 @@
             //         element.textContent = entity.name;
             //         element.setAttribute("data-id", entity.id);
             //         frag.appendChild(element);
-            //         return frag;
+            //         return frag; 
             //     }, document.createDocumentFragment()));
             //     return listElement;
             // },
@@ -45,22 +45,39 @@
             //     center.removeEventListener("click", goToVehicles, false);
             //     center.innerHTML = "";
             // };
+
+            const addinId = 'ajg1MDg0M2UtYWZiYi05Y2Z';
+
             const clearOnLeaving = () => {
-                document.getElementById('photoBtn').removeEventListener("click", goToVehicles, false);
+                document.getElementById('photoBtn').removeEventListener("click");
             };
             const takePhoto = () => {
-                if (api.mobile.exists())
+                if (api.mobile.exists()){}
                     api.mobile.camera.takePicture().then((media) =>{
                         // do something with the base64 returned
                         console.log('media', media);
                         document.getElementById('photo').setAttribute('src', media);
+
+                        // if (!geotab.addin.storageApiSample) {
+
+                        // }
                     });
             };
             const refreshPage = () => {
                 document.getElementById('photoBtn').addEventListener('click', () => {
                     console.log('clicked');
-                    takePhoto();
-                })
+                    // takePhoto();
+                });
+                api.call("Add",{
+                    "typeName": "AddInData",
+                    "entity": {
+                        "addInId": addinId,
+                        "details": 
+                        {
+                            "customer": 'Artem Test'
+                        }
+                    }
+                });
             }
 
             return {
