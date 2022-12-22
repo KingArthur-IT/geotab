@@ -83,9 +83,12 @@
                         "addInId": addinId,
                         "selectClause": "customer"
                     }
-                });
-                document.getElementById('info').innerHTML = rez;
-                console.log(rez);
+                }, 
+                    result =>{ 
+                        console.log(`Successfully`, rezult)
+                        document.getElementById('info').innerHTML = rez;
+                    }
+                );
             }
 
             return {
