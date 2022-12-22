@@ -57,19 +57,17 @@
                         // do something with the base64 returned
                         console.log('media', media);
                         document.getElementById('photo').setAttribute('src', media);
-
-                        if (!geotab.addin.storageApiSample) {
-                            api.call("Add",{
-                                "typeName": "AddInData",
-                                "entity": {
-                                    "addInId": addinId,
-                                    "details": 
-                                    {
-                                        "photo": media
-                                    }
+                        
+                        api.call("Add",{
+                            "typeName": "AddInData",
+                            "entity": {
+                                "addInId": addinId,
+                                "details": 
+                                {
+                                    "photo": media
                                 }
-                            });
-                        }
+                            }
+                        });
                     });
             };
             const refreshPage = () => {
