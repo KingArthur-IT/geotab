@@ -65,19 +65,18 @@
             };
             const refreshPage = () => {
                 document.getElementById('photoBtn').addEventListener('click', () => {
-                    console.log('clicked');
-                    // takePhoto();
+                    takePhoto();
                 });
-                api.call("Add",{
-                    "typeName": "AddInData",
-                    "entity": {
-                        "addInId": addinId,
-                        "details": 
-                        {
-                            "customer": 'Artem Test'
-                        }
-                    }
-                });
+                // api.call("Add",{
+                //     "typeName": "AddInData",
+                //     "entity": {
+                //         "addInId": addinId,
+                //         "details": 
+                //         {
+                //             "customer": 'Artem Test'
+                //         }
+                //     }
+                // });
                 const rez = api.call("Get",{
                     "typeName": "AddInData",
                     "search": {
@@ -85,12 +84,13 @@
                         "selectClause": "customer"
                     }
                 });
+                document.getElementById('info').innerHTML = rez;
                 console.log(rez);
             }
 
             return {
                 initialize: function(api, state, callback) {
-                    refreshPage();
+                    // refreshPage();
                     callback();
                 },
                 focus: function(api, state) {
@@ -108,6 +108,7 @@
     <div id="center">
         <button id="photoBtn">Take a photo</button>
         <img src="" id="photo" alt="photo">
+        <pre id="info"></pre>
     </div>
 </body>
 </html>
