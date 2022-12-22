@@ -5,6 +5,8 @@
     <style>
         #center {
             text-align: center;
+            display: flex;
+            flex-direction: column;
         }
     </style>
     <script>
@@ -51,7 +53,7 @@
                     api.mobile.camera.takePicture().then((media) =>{
                         // do something with the base64 returned
                         console.log('media', media);
-                        document.getElementById('photo').innerHTML = media;
+                        document.getElementById('photo').setAttribute('src', media);
                     });
             };
             const refreshPage = () => {
@@ -80,7 +82,7 @@
     <!-- <input type="file" accept="image/*" capture=""> -->
     <div id="center">
         <button id="photoBtn">Take a photo</button>
-        <div id="photo"></div>
+        <img src="" id="photo" alt="photo">
     </div>
 </body>
 </html>
