@@ -95,8 +95,9 @@
                     }
                 },
                     rezult => {
-                        console.log('ok', rezult)
-                        document.getElementById('info').innerHTML = rezult[0].details //.customer
+                        document.getElementById('info').innerHTML = rezult[0].details?.media //.customer
+                        if (rezult[0]?.details?.media)
+                            document.getElementById('photo').setAttribute('src', rezult[0]?.details?.media);
                     }
                 );
 
