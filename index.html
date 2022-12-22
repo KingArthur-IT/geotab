@@ -88,24 +88,24 @@
                 // });
                 // document.getElementById('info').innerHTML = 
 
-                // api.call("Get",{
-                //     "typeName": "AddInData",
-                //     "search": {
-                //         "addInId": addinId,
-                //     }
-                // },
-                //     rezult => {
-                //         console.log('ok', rezult)
-                //         document.getElementById('info').innerHTML = rezult[0].details.customer
-                //     }
-                // );
-
-                api.call("Remove", {
+                api.call("Get",{
                     "typeName": "AddInData",
-                    "entity": {
-                        "id": addinId
+                    "search": {
+                        "addInId": addinId,
                     }
-                });
+                },
+                    rezult => {
+                        console.log('ok', rezult)
+                        document.getElementById('info').innerHTML = rezult //[0].details.customer
+                    }
+                );
+
+                // api.call("Remove", {
+                //     "typeName": "AddInData",
+                //     "entity": {
+                //         "id": addinId
+                //     }
+                // });
             }
 
             return {
