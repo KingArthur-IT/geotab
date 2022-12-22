@@ -56,7 +56,6 @@
                     api.mobile.camera.takePicture().then((media) =>{
                         // do something with the base64 returned
                         console.log('media', media);
-                        document.getElementById('photo').setAttribute('src', media);
                         
                         api.call("Add",{
                             "typeName": "AddInData",
@@ -67,7 +66,15 @@
                                     "photo": media
                                 }
                             }
-                        });
+                        },
+                            rezult => {
+                                document.getElementById('photo').setAttribute('src', media);
+                                document.getElementById('info').innerHTML = 'OK'
+                            },
+                            error => {
+                                document.getElementById('info').innerHTML = error
+                            }
+                        );
                     });
             };
             const refreshPage = () => {
