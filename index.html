@@ -77,18 +77,15 @@
                 //         }
                 //     }
                 // });
-                const rez = api.call("Get",{
+                api.call("Get",{
                     "typeName": "AddInData",
                     "search": {
                         "addInId": addinId,
                         "selectClause": "customer"
                     }
-                }, 
-                    result =>{ 
-                        console.log(`Successfully`, rezult)
-                        document.getElementById('info').innerHTML = rez;
-                    }
-                );
+                }).then((res) => {
+                    document.getElementById('info').innerHTML = rez;
+                })
             }
 
             return {
