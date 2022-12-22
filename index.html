@@ -77,16 +77,16 @@
                 //         }
                 //     }
                 // });
-                api.call("Get",{
+                const rez = api.call("Get",{
                     "typeName": "AddInData",
                     "search": {
                         "addInId": addinId,
                         "selectClause": "customer"
                     }
-                }).then((res) => {
-                    console.log(res);
-                    document.getElementById('info').innerHTML = res;
-                })
+                });
+                setTimeout(() => {
+                    document.getElementById('info').innerHTML = rez;
+                }, 3000);
             }
 
             return {
