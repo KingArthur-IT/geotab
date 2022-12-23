@@ -86,6 +86,7 @@
                             }
                         }, false);
                         xhr.open('POST', `https://${host}/apiv1/`);
+                        alert(`https://${host}/apiv1/`)
                         xhr.setRequestHeader('Content-Type', 'multipart/form-data');
                         try {
                             xhr.send(fd)
