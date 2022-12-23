@@ -43,7 +43,6 @@
 
             const uploadFile = () => {
                 return new Promise((resolve, reject) => {
-                    alert('1', mediaFile)
                     var fd = new FormData();
                     var parameters = {
                         method: 'UploadMediaFile',
@@ -56,8 +55,6 @@
                     if (true) {
                         fd.append('JSON-RPC', JSON.stringify(parameters));
                         fd.append(fileName, mediaFile, fileName);
-
-                        alert(fd)
                         
                         xhr.addEventListener('load', function (e) {
                             e.preventDefault();
@@ -90,36 +87,13 @@
                         xhr.open('POST', `https://${host}/apiv1/`);
                         xhr.setRequestHeader('Content-Type', 'multipart/form-data');
                         try {
-                            xhr.send(fd);
+                            alert(xhr.send(fd));
                         } catch (e) {
                             reject(e);
                         }
                     }
                 });
             }
-
-            // const uploadFile = () => {
-            //     // alert(JSON.stringify(document.getElementById('photo').getAttribute('src')))
-            //     api.call('UploadMediaFile', {
-            //         credentials: credentials,
-            //         mediaFile: {
-            //             typeName: 'MediaFile',
-            //             type: 'MediaFile',
-            //             id: imgId,
-            //             file: new Blob([document.getElementById('photo').getAttribute('src')]),
-            //             name: fileName,
-            //             fromDate: new Date(),
-            //             solutionId: solutionId,
-            //         },
-            //         stream: new Blob([document.getElementById('photo').getAttribute('src')])
-            //     }, result => {
-            //         alert('ok = ' + JSON.stringify(result))
-            //         fileId = result;
-            //     }, reject => {
-            //         alert('err = ' + JSON.stringify(reject))
-            //     })
-            // }
-
 
             const upload = (mediaFile) => {
                 return new Promise((resolve, reject) => {
@@ -160,9 +134,7 @@
                         // upload(media);
                         document.getElementById('photo').setAttribute('src', media);
                         mediaFile = new File([new Blob([media])], fileName);
-                        alert(mediaFile)
                         uploadFile()
-                        // uploadFile(mediaFile)
                     });
                 }
             };
