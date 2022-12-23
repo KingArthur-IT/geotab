@@ -11,15 +11,15 @@
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
-            const fileId = 'ajg1MDg0M2UtYWZiYi05Y2Z',
-                  fileName = 'Test Media File'
+            const fileName = 'Test Media File'
             var host = 'my135.geotab.com',
-                credentials = {}
+                credentials = {},
+                fileId = ''
 
             const uploadFile = (mediaFile) => {
                 return new Promise((resolve, reject) => {
                     var fd = new FormData();
-                    const file = mediaFile;
+                    const file = new Blob([mediaFile], {type:"application/octet-stream"});
                     var parameters = {
                         method: 'UploadMediaFile',
                         params: {
@@ -30,10 +30,10 @@
                     let xhr = new XMLHttpRequest();
                     // document.getElementById('info').innerHTML = 'pre file';
                     // document.getElementById('photo').setAttribute('src', file);
-                    // alert(file)
+                    alert(file)
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        fd.append(fileName, new Blob([file], {type:"application/octet-stream"}), fileName);
+                        fd.append(fileName, file, fileName);
                         
                         // document.getElementById('info').innerHTML = 'file';
                         xhr.addEventListener('load', function (e) {
@@ -79,13 +79,36 @@
                 });
             }
 
+            const upload = (mediaFile) => {
+                return new Promise((resolve, reject) => {
+                    // if (!mediaFile) {
+                    //     throw new Error('Missing file');
+                    // }
+
+                    api.call('Add', {
+                        typeName: 'MediaFile',
+                        entity: {
+                            name: fileName,
+                            fromDate: new Date()
+                        }
+                    }, result => {
+                        alert(JSON.stringify(rezult))
+                        fileId = result;
+                        resolve(mediaFile);
+                    }, reject)
+                })
+                    .then(uploadFile)
+            }
+
+                    
             const clearOnLeaving = () => {
                 document.getElementById('photoBtn').removeEventListener("click");
             };
             const takePhoto = () => {
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
-                        uploadFile(media);
+                        
+                        upload(media);
                     });
                 }
             };
