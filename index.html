@@ -21,7 +21,6 @@
             const resizeImage = (mediaFile, width) => {
                 return new Promise((resolve, reject) => {
                     const contentType = 'jpeg';
-                    document.getElementById('info').innerHTML = 'load'
                     const elem = document.createElement('canvas');
 
                     const scaleFactor = width / document.getElementById('photo').clientWidth;
@@ -29,9 +28,7 @@
                     elem.height = document.getElementById('photo').clientHeight * scaleFactor;
 
                     const ctx = elem.getContext('2d');
-                    document.getElementById('info').innerHTML = 'bef draw'
                     ctx.drawImage(document.getElementById('photo'), 0, 0, width, elem.height);
-                    document.getElementById('info').innerHTML = 'aft draw'
                     ctx.canvas.toBlob((blob) => {
                         mediaFile = new File([blob], fileName, {
                             type: contentType,
@@ -56,7 +53,6 @@
                         }
                     };
                     let xhr = new XMLHttpRequest();
-                    document.getElementById('info').innerHTML = 'before fd'
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         fd.append('Test6', mediaFile);
@@ -91,7 +87,7 @@
                                 reject(e);
                             }
                         }, false);
-                        xhr.open('POST', `https://${host}/apiv1/`);
+                        xhr.open('POST', `https://${host}/apiv1/UploadMediaFile`);
                         xhr.setRequestHeader('Accept', 'multipart/form-data, */*;q=0.8');
                         try {
                             xhr.send(fd);
