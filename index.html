@@ -11,7 +11,7 @@
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
-            const fileName = 'Test.jpg'
+            const fileName = 'Test.jpeg'
             const solutionId = 'aTM3MzM1N2EtMjNlYi1hMWN';
             var host = 'my135.geotab.com',
                 credentials = {},
@@ -87,15 +87,13 @@
                     //     throw new Error('Missing file');
                     // }
 
-                    const file = new Blob([mediaFile], {type:"application/octet-stream"});
-
                     api.call('Add', {
                         typeName: 'MediaFile',
                         entity: {
                             name: fileName,
                             fromDate: new Date(),
                             solutionId: solutionId,
-                            file: file
+                            file: mediaFile
                         }
                     }, result => {
                         alert('ok = ' + JSON.stringify(result))
@@ -115,7 +113,7 @@
             const takePhoto = () => {
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
-                        upload(media);
+                        upload(new Blob([media], {type:"application/octet-stream"}));
                     });
                 }
             };
