@@ -18,82 +18,80 @@
                 credentials = {},
                 fileId = ''
 
-            const uploadFile = (mediaFile) => {
-                return new Promise((resolve, reject) => {
-                    var fd = new FormData();
-                    const file = mediaFile;
-                    var parameters = {
-                        method: 'UploadMediaFile',
-                        params: {
-                            credentials: credentials,
-                            mediaFile: { 'id': imgId },
-                            // solutionId: solutionId,
-                            // file: mediaFile
-                        }
-                    };
-                    let xhr = new XMLHttpRequest();
-                    // document.getElementById('info').innerHTML = 'pre file';
-                    // document.getElementById('photo').setAttribute('src', file);
-                    if (true) {
-                        fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        fd.append(fileName, file, fileName);
-                        
-                        // document.getElementById('info').innerHTML = 'file';
-                        xhr.addEventListener('load', function (e) {
-                            e.preventDefault();
-                            // document.getElementById('info').innerHTML = 'load';
-                            alert(JSON.stringify(e))
-                            if (e.target && e.target['responseText'].length > 0) {
-                                try {
-                                    let jsonResponse = JSON.parse(e.target['responseText']);
-                                    if (!jsonResponse.error) {
-                                        document.getElementById('info').innerHTML = 'resolve';
-                                        document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
-                                        resolve(mediaFile);
-                                    } else {
-                                        reject(jsonResponse.error);
-                                    }
-                                } catch (e) {
-                                    reject(e);
-                                }
-                            } else {
-                                reject(e);
-                                xhr && xhr.abort();
-                            }
-                        }, false);
-                        xhr.addEventListener('error', function (e) {
-                            if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
-                                reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
-                            } else {
-                                reject(e);
-                            }
-                        }, false);
-                        xhr.open('POST', `https://${host}/apiv1/`);
-                        xhr.setRequestHeader('Accept', 'multipart/form-data, */*;q=0.8');
-                        // document.getElementById('info').innerHTML = 'open'
-                        try {
-                            xhr.send(fd);
-                            // document.getElementById('info').innerHTML = 'send';
-                            // document.getElementById('photo').setAttribute('src', mediaFile);
-                        } catch (e) {
-                            reject(e);
-                        }
-                    }
-                });
-            }
-
             // const uploadFile = (mediaFile) => {
-            //     api.call('UploadMediaFile', {
-            //         typeName: 'MediaFile',
-            //         mediaFile: { 'id': imgId },
-            //         stream: mediaFile
-            //     }, result => {
-            //         alert('ok = ' + JSON.stringify(result))
-            //         fileId = result;
-            //     }, reject => {
-            //         alert('err = ' + JSON.stringify(reject))
-            //     })
+            //     return new Promise((resolve, reject) => {
+            //         var fd = new FormData();
+            //         const file = mediaFile;
+            //         var parameters = {
+            //             method: 'UploadMediaFile',
+            //             params: {
+            //                 credentials: credentials,
+            //                 mediaFile: { 'id': imgId }
+            //             }
+            //         };
+            //         let xhr = new XMLHttpRequest();
+            //         // document.getElementById('info').innerHTML = 'pre file';
+            //         // document.getElementById('photo').setAttribute('src', file);
+            //         if (true) {
+            //             fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
+            //             fd.append(fileName, file, fileName);
+                        
+            //             // document.getElementById('info').innerHTML = 'file';
+            //             xhr.addEventListener('load', function (e) {
+            //                 e.preventDefault();
+            //                 // document.getElementById('info').innerHTML = 'load';
+            //                 alert(JSON.stringify(e))
+            //                 if (e.target && e.target['responseText'].length > 0) {
+            //                     try {
+            //                         let jsonResponse = JSON.parse(e.target['responseText']);
+            //                         if (!jsonResponse.error) {
+            //                             document.getElementById('info').innerHTML = 'resolve';
+            //                             document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
+            //                             resolve(mediaFile);
+            //                         } else {
+            //                             reject(jsonResponse.error);
+            //                         }
+            //                     } catch (e) {
+            //                         reject(e);
+            //                     }
+            //                 } else {
+            //                     reject(e);
+            //                     xhr && xhr.abort();
+            //                 }
+            //             }, false);
+            //             xhr.addEventListener('error', function (e) {
+            //                 if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
+            //                     reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
+            //                 } else {
+            //                     reject(e);
+            //                 }
+            //             }, false);
+            //             xhr.open('POST', `https://${host}/apiv1/`);
+            //             xhr.setRequestHeader('Accept', 'multipart/form-data, */*;q=0.8');
+            //             // document.getElementById('info').innerHTML = 'open'
+            //             try {
+            //                 xhr.send(fd);
+            //                 // document.getElementById('info').innerHTML = 'send';
+            //                 // document.getElementById('photo').setAttribute('src', mediaFile);
+            //             } catch (e) {
+            //                 reject(e);
+            //             }
+            //         }
+            //     });
             // }
+
+            const uploadFile = (mediaFile) => {
+                api.call('Add', {
+                    typeName: 'MediaFile',
+                    mediaFile: { 'id': imgId },
+                    stream: mediaFile
+                }, result => {
+                    alert('ok = ' + JSON.stringify(result))
+                    fileId = result;
+                }, reject => {
+                    alert('err = ' + JSON.stringify(reject))
+                })
+            }
 
             const upload = (mediaFile) => {
                 return new Promise((resolve, reject) => {
@@ -102,13 +100,9 @@
                     // }
 
                     api.call('Add', {
-                        typeName: 'MediaFile',
-                        entity: {
-                            name: fileName,
-                            fromDate: new Date(),
-                            solutionId: solutionId,
-                            file: mediaFile
-                        }
+                        typeName: 'UploadMediaFile',
+                        mediaFile: { 'id': imgId },
+                        stream: mediaFile
                     }, result => {
                         alert('ok = ' + JSON.stringify(result))
                         fileId = result;
@@ -129,7 +123,7 @@
                     api.mobile.camera.takePicture().then((media) => {
                         const file = new Blob([media], {type:"application/octet-stream"});
                         // upload(media);
-                        uploadFile(file)
+                        uploadFile(media)
                     });
                 }
             };
