@@ -30,10 +30,10 @@
                     let xhr = new XMLHttpRequest();
                     document.getElementById('info').innerHTML = 'pre file';
                     document.getElementById('photo').setAttribute('src', file);
-                    if (file) {
+                    if (true) {
+                        document.getElementById('info').innerHTML = 'file';
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         fd.append(fileName, file, fileName);
-                        document.getElementById('info').innerHTML = 'file';
 
                         xhr.addEventListener('load', function (e) {
                             e.preventDefault();
