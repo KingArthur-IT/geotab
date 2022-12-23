@@ -87,19 +87,22 @@
                     //     throw new Error('Missing file');
                     // }
 
+                    const file = new Blob([mediaFile], {type:"application/octet-stream"});
+
                     api.call('Add', {
                         typeName: 'MediaFile',
                         entity: {
                             name: fileName,
                             fromDate: new Date(),
-                            solutionId: solutionId
+                            solutionId: solutionId,
+                            file: file
                         }
                     }, result => {
-                        alert('result' + JSON.stringify(result))
+                        alert('ok = ' + JSON.stringify(result))
                         fileId = result;
                         resolve(mediaFile);
                     }, reject => {
-                        alert('err' + JSON.stringify(reject))
+                        alert('err = ' + JSON.stringify(reject))
                     })
                 })
                     .then(uploadFile)
