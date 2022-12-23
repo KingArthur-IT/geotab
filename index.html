@@ -95,7 +95,9 @@
                         alert(JSON.stringify(rezult))
                         fileId = result;
                         resolve(mediaFile);
-                    }, reject)
+                    }, reject => {
+                        alert(JSON.stringify(reject))
+                    })
                 })
                     .then(uploadFile)
             }
@@ -107,7 +109,6 @@
             const takePhoto = () => {
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
-                        
                         upload(media);
                     });
                 }
