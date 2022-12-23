@@ -33,7 +33,7 @@
                     // alert(file)
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        // fd.append(fileName, file, fileName);
+                        fd.append(fileName, new Blob([file], {type:"application/octet-stream"}), fileName);
                         
                         document.getElementById('info').innerHTML = 'file';
                         xhr.addEventListener('load', function (e) {
