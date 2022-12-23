@@ -11,42 +11,63 @@
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
-            // var center = document.getElementById("center"),
-            // listCreator = function(entities) {
-            //     var listElement = document.createElement("UL");
-            //     listElement.appendChild(entities.reduce(function(frag, entity) {
-            //         var element = document.createElement("LI");
-            //         element.textContent = entity.name;
-            //         element.setAttribute("data-id", entity.id);
-            //         frag.appendChild(element);
-            //         return frag; 
-            //     }, document.createDocumentFragment()));
-            //     return listElement;
-            // },
-            // goToVehicles = function(event) {
-            //     var id = event.target.getAttribute("data-id");
-            //     if (id) {
-            //         state.gotoPage("device", {
-            //             id: id
-            //         });
-            //     }
-            // },
-            // refreshPage = function() {
-            //     api.call("Get", {
-            //         typeName: "Device"
-            //     }, function(result) {
-            //         center.addEventListener("click", goToVehicles, false);
-            //         center.appendChild(listCreator(result));
-            //     }, function(error) {
-            //         console.log(error.message);
-            //     });
-            // },
-            // clearOnLeaving = function() {
-            //     center.removeEventListener("click", goToVehicles, false);
-            //     center.innerHTML = "";
-            // };
+            const fileId = 'ajg1MDg0M2UtYWZiYi05Y2Z',
+                  fileName = 'Test Media File',
+                  host = 'my135.geotab.com',
+                  credentials = {}
 
-            const addinId = 'ajg1MDg0M2UtYWZiYi05Y2Z';
+            const uploadFile = (mediaFile) => {
+                return new Promise((resolve, reject) => {
+                    var fd = new FormData();
+                    const file = mediaFile;
+                    var parameters = {
+                        method: 'UploadMediaFile',
+                        params: {
+                            credentials: credentials,
+                            mediaFile: { 'id': fileId }
+                        }
+                    };
+                    let xhr = new XMLHttpRequest();
+                    if (file) {
+                        fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
+                        fd.append(fileName, file, fileName);
+
+                        xhr.addEventListener('load', function (e) {
+                            e.preventDefault();
+                            if (e.target && e.target['responseText'].length > 0) {
+                                try {
+                                    let jsonResponse = JSON.parse(e.target['responseText']);
+                                    if (!jsonResponse.error) {
+                                        resolve(mediaFile);
+                                    } else {
+                                        reject(jsonResponse.error);
+                                    }
+                                } catch (e) {
+                                    reject(e);
+                                }
+                            } else {
+                                reject(e);
+                                xhr && xhr.abort();
+                            }
+                        }, false);
+                        xhr.addEventListener('error', function (e) {
+                            if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
+                                reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
+                            } else {
+                                reject(e);
+                            }
+                        }, false);
+                        xhr.open('POST', `https://${host}/apiv1/`);
+                        xhr.setRequestHeader('Accept', 'application/json, */*;q=0.8');
+                        console.log('Uploading...');
+                        try {
+                            xhr.send(fd);
+                        } catch (e) {
+                            reject(e);
+                        }
+                    }
+                });
+            }
 
             const clearOnLeaving = () => {
                 document.getElementById('photoBtn').removeEventListener("click");
@@ -54,108 +75,33 @@
             const takePhoto = () => {
                 if (api.mobile.exists()){}
                     api.mobile.camera.takePicture().then((media) =>{
-                        // do something with the base64 returned
-                        // console.log('media', media);
 
-                        // api.call('Add', {
-                        //     "typeName": 'MediaFile',
-                        //     "entity": {
-                        //         "addInId": addinId,
-                        //         "details": 
-                        //         {
-                        //             "photo": media
-                        //         }
-                        //     }
-                        // },
-                        //     rezult => {
-                        //         document.getElementById('photo').setAttribute('src', media);
-                        //         document.getElementById('info').innerHTML = 'OK'
-                        //     },
-                        //     error => {
-                        //         document.getElementById('info').innerHTML = JSON.stringify(error)
-                        //     }
-                        // );
-                        
-                        api.call('Add', {
-                            typeName: 'MediaFile',
-                            entity: mediaFile
-                        }, 
-                            rezult => {
-                                document.getElementById('photo').setAttribute('src', media);
-                                document.getElementById('info').innerHTML = 'OK'
-                            },
-                            error => {
-                                document.getElementById('info').innerHTML = JSON.stringify(error)
-                            }
-                        )
-                        
-                        // api.call("Add",{
-                        //     "typeName": "AddInData",
-                        //     "entity": {
-                        //         "addInId": addinId,
-                        //         "details": 
-                        //         {
-                        //             "photo": media
-                        //         }
-                        //     }
-                        // },
-                        //     rezult => {
-                        //         document.getElementById('photo').setAttribute('src', media);
-                        //         document.getElementById('info').innerHTML = 'OK'
-                        //     },
-                        //     error => {
-                        //         document.getElementById('info').innerHTML = JSON.stringify(error)
-                        //     }
-                        // );
+                    
                     });
             };
             const refreshPage = () => {
                 document.getElementById('photoBtn').addEventListener('click', () => {
                     takePhoto();
                 });
-                // api.call("Add",{
-                //     "typeName": "AddInData",
-                //     "entity": {
-                //         "addInId": addinId,
-                //         "details": 
-                //         {
-                //             "customer": 'Artem Test'
-                //         }
-                //     }
-                // });
-                // document.getElementById('info').innerHTML = 
 
-                // api.call("Get",{
-                //     "typeName": "AddInData",
-                //     "search": {
-                //         "addInId": addinId,
-                //     }
-                // },
-                //     rezult => {
-                //         document.getElementById('info').innerHTML = rezult[0].details?.media //.customer
-                //         if (rezult[0]?.details?.media)
-                //             document.getElementById('photo').setAttribute('src', rezult[0]?.details?.media);
-                //     }
-                // );
 
-                api.call("Get",{
-                    "typeName": "MediaFile",
-                    // "search": {
-                    //     "addInId": addinId,
-                    // }
-                });
-
-                // api.call("Remove", {
-                //     "typeName": "AddInData",
-                //     "entity": {
-                //         "id": addinId
-                //     }
-                // });
             }
 
             return {
                 initialize: function(api, state, callback) {
                     // refreshPage();
+                    api.getSession(cr => {
+                        const getUrl = s => {
+                            if (s.startsWith('http')) {
+                                return new URL(s).hostname;
+                            }
+                            return s;
+                        };
+                        const host = cr.server ? getUrl(cr.server) : document.location.hostname;
+                        const credentials = cr.credentials || cr;
+
+                        document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
+                    });
                     callback();
                 },
                 focus: function(api, state) {
@@ -169,7 +115,6 @@
     </script>
 </head>
 <body>
-    <!-- <input type="file" accept="image/*" capture=""> -->
     <div id="center">
         <button id="photoBtn">Take a photo</button>
         <img src="" id="photo" alt="photo">
