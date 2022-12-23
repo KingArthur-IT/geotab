@@ -85,8 +85,7 @@
                                 reject(e);
                             }
                         }, false);
-                        xhr.open('POST', `https://${host}/apiv1`);
-                        // alert(`https://my.geotab.com/apiv1/`)
+                        xhr.open('POST', `https://${host}/apiv1/`, true);
                         xhr.setRequestHeader('Content-Type', 'multipart/form-data');
                         try {
                             xhr.send(fd)
