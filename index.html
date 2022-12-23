@@ -39,6 +39,7 @@
                         xhr.addEventListener('load', function (e) {
                             e.preventDefault();
                             // document.getElementById('info').innerHTML = 'load';
+                            alert(JSON.stringify(e.target))
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
