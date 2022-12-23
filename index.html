@@ -101,19 +101,19 @@
             // }
 
             const uploadFile = () => {
-                alert(JSON.stringify(document.getElementById('photo').getAttribute('src')))
+                // alert(JSON.stringify(document.getElementById('photo').getAttribute('src')))
                 api.call('UploadMediaFile', {
                     credentials: credentials,
                     mediaFile: {
                         typeName: 'MediaFile',
                         type: 'MediaFile',
                         id: imgId,
-                        file: document.getElementById('photo').getAttribute('src'),
+                        file: new Blob([document.getElementById('photo').getAttribute('src')]),
                         name: fileName,
                         fromDate: new Date(),
                         solutionId: solutionId,
                     },
-                    stream: document.getElementById('photo').getAttribute('src')
+                    stream: new Blob([document.getElementById('photo').getAttribute('src')])
                 }, result => {
                     alert('ok = ' + JSON.stringify(result))
                     fileId = result;
