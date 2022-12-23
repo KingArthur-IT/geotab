@@ -11,7 +11,7 @@
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
-            const fileName = 'Test2.jpeg'
+            const fileName = 'Test3.jpeg'
             const solutionId = 'aTM3MzM1N2EtMjNlYi1hMWN';
             var host = 'my135.geotab.com',
                 credentials = {},
@@ -153,14 +153,14 @@
 
                         document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
                     });
-                    // api.call('Get', {
-                    //         typeName: 'MediaFile',
-                    //         resultsLimit: 100
-                    //     },
-                    //    rezult => {
-                    //        document.getElementById('info').innerHTML = JSON.stringify(rezult)
-                    //    } 
-                    // )
+                    api.call('Get', {
+                            typeName: 'MediaFile',
+                            resultsLimit: 100
+                        },
+                       rezult => {
+                           document.getElementById('info').innerHTML = JSON.stringify(rezult)
+                       } 
+                    )
                     callback();
                 },
                 focus: function(api, state) {
