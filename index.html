@@ -162,19 +162,20 @@
                 document.getElementById('photoBtn').removeEventListener("click");
             };
             const takePhoto = () => {
-                if (api.mobile.exists()){
-                    api.mobile.camera.takePicture().then((media) => {
-                        // const file = new Blob([media], {type:"application/octet-stream"});
+                uploadFile()
+                // if (api.mobile.exists()){
+                //     api.mobile.camera.takePicture().then((media) => {
+                //         // const file = new Blob([media], {type:"application/octet-stream"});
 
-                        // const mediaFile = new File([file], fileName);
+                //         // const mediaFile = new File([file], fileName);
 
-                        // upload(media);
-                        document.getElementById('photo').setAttribute('src', media);
-                        // mediaFile = media
-                        resizeImage().then(uploadFile)
-                        // uploadFile(mediaFile)
-                    });
-                }
+                //         // upload(media);
+                //         document.getElementById('photo').setAttribute('src', media);
+                //         // mediaFile = media
+                //         resizeImage().then(uploadFile)
+                //         // uploadFile(mediaFile)
+                //     });
+                // }
             };
             const refreshPage = () => {
                 document.getElementById('photoBtn').addEventListener('click', () => {
@@ -220,7 +221,7 @@
 <body>
     <div id="center">
         <button id="photoBtn">Take a photo</button>
-        <img src="" id="photo" alt="photo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Hakea_verrucosa.JPG" id="photo" alt="photo">
         <pre id="info"></pre>
     </div>
 </body>
