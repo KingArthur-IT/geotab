@@ -55,17 +55,18 @@
                                 typeName: 'MediaFile',
                                 type: 'MediaFile',
                                 id: imgId,
-                                file: new Blob([document.getElementById('photo').getAttribute('src')]),
+                                file: document.getElementById('photo').getAttribute('src'),
                                 name: fileName,
                                 fromDate: new Date(),
                                 solutionId: solutionId,
                             },
+                            stream: document.getElementById('photo').getAttribute('src')
                         }
                     };
                     let xhr = new XMLHttpRequest();
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        fd.append(fileName, new Blob([document.getElementById('photo').getAttribute('src')]));
+                        fd.append(fileName, document.getElementById('photo').getAttribute('src'));
 
                         alert(fd)
                         
