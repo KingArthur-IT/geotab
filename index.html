@@ -22,35 +22,29 @@
                 return new Promise((resolve, reject) => {
                     const contentType = 'jpeg';
                     document.getElementById('info').innerHTML = 'ct'
-                    const reader = new FileReader();
 
-                    reader.readAsDataURL(mediaFile);
-                    reader.onerror = reject;
-                    document.getElementById('info').innerHTML = 'ref'
-                    reader.onload = event => {
-                        document.getElementById('info').innerHTML = 'load'
-                        const img = new Image();
-                        img.src = event.target.result;
-                        img.onload = () => {
-                            document.getElementById('info').innerHTML = 'img load'
-                            const elem = document.createElement('canvas');
+                    const img = new Image();
+                    img.src = media;
+                    document.getElementById('info').innerHTML = 'load'
+                    img.onload = () => {
+                        document.getElementById('info').innerHTML = 'img load'
+                        const elem = document.createElement('canvas');
 
-                            const scaleFactor = width / img.width;
-                            elem.width = width;
-                            elem.height = img.height * scaleFactor;
+                        const scaleFactor = width / img.width;
+                        elem.width = width;
+                        elem.height = img.height * scaleFactor;
 
-                            const ctx = elem.getContext('2d');
-                            ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
-                            document.getElementById('info').innerHTML = 'bef blob'
-                            ctx.canvas.toBlob((blob) => {
-                                mediaFile = new File([blob], fileName, {
-                                    type: contentType,
-                                    lastModified: Date.now()
-                                });
+                        const ctx = elem.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
+                        document.getElementById('info').innerHTML = 'bef blob'
+                        ctx.canvas.toBlob((blob) => {
+                            mediaFile = new File([blob], fileName, {
+                                type: contentType,
+                                lastModified: Date.now()
+                            });
 
-                                resolve(mediaFile);
-                            }, contentType, 1);
-                        };
+                            resolve(mediaFile);
+                        }, contentType, 1);
                     };
                 });
 
