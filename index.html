@@ -23,7 +23,7 @@
                 return new Promise((resolve, reject) => {
                     const width = 480;
                     const contentType = 'jpeg';
-                    const elem = document.createElement('canvas');
+                    const elem = document.getElementById('canvas');
 
                     const scaleFactor = width / document.getElementById('photo').clientWidth;
                     elem.width = width;
@@ -213,6 +213,7 @@
         <button id="photoBtn">Take a photo</button>
         <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Hakea_verrucosa.JPG" id="photo" alt="photo">
         <pre id="info"></pre>
+        <canvas id="canvas"></canvas>
     </div>
 </body>
 </html>
