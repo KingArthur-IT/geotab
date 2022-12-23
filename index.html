@@ -81,11 +81,11 @@
             // }
 
             const uploadFile = (mediaFile) => {
-                api.call('Add', {
-                    typeName: 'UploadMediaFile',
-                    entity:{
-                        mediaFile: { 'id': imgId },
-                        stream: mediaFile
+                api.call('UploadMediaFile', {
+                    credentials: credentials,
+                    mediaFile: {
+                        id: imgId,
+                        file: mediaFile
                     }
                 }, result => {
                     alert('ok = ' + JSON.stringify(result))
