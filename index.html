@@ -105,6 +105,8 @@
                 api.call('UploadMediaFile', {
                     credentials: credentials,
                     mediaFile: {
+                        typeName: 'MediaFile',
+                        type: 'MediaFile',
                         id: imgId,
                         file: document.getElementById('photo').getAttribute('src'),
                         name: fileName,
