@@ -101,12 +101,12 @@
             // }
 
             const uploadFile = () => {
+                alert(JSON.stringify(mediaFile))
                 api.call('UploadMediaFile', {
                     credentials: credentials,
                     mediaFile: {
                         id: imgId,
                         file: mediaFile,
-                        stream: mediaFile,
                         name: fileName,
                         fromDate: new Date(),
                         solutionId: solutionId,
