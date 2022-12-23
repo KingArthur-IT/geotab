@@ -21,15 +21,18 @@
             const resizeImage = (mediaFile, width) => {
                 return new Promise((resolve, reject) => {
                     const contentType = getContentType(mediaFile);
-
+                    document.getElementById('info').innerHTML = 'ct'
                     const reader = new FileReader();
 
                     reader.readAsDataURL(mediaFile);
                     reader.onerror = reject;
+                    document.getElementById('info').innerHTML = 'ref'
                     reader.onload = event => {
+                        document.getElementById('info').innerHTML = 'load'
                         const img = new Image();
                         img.src = event.target.result;
                         img.onload = () => {
+                            document.getElementById('info').innerHTML = 'img load'
                             const elem = document.createElement('canvas');
 
                             const scaleFactor = width / img.width;
@@ -38,6 +41,7 @@
 
                             const ctx = elem.getContext('2d');
                             ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
+                            document.getElementById('info').innerHTML = 'bef blob'
                             ctx.canvas.toBlob((blob) => {
                                 mediaFile = new File([blob], fileName, {
                                     type: contentType,
@@ -64,6 +68,7 @@
                         }
                     };
                     let xhr = new XMLHttpRequest();
+                    document.getElementById('info').innerHTML = 'before fd'
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         fd.append('Test6', mediaFile);
