@@ -126,10 +126,7 @@
                     api.mobile.camera.takePicture().then((media) => {
                         const file = new Blob([media], {type:"application/octet-stream"});
 
-                        const mediaFile = new File(file, fileName, {
-                            type: 'jpeg',
-                            lastModified: Date.now()
-                        });
+                        const mediaFile = new File([file], fileName);
 
                         // upload(media);
                         uploadFile(mediaFile)
