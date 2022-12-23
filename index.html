@@ -32,10 +32,9 @@
                     let xhr = new XMLHttpRequest();
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        fd.append(fileName, file, fileName);
+                        fd.append('Test6', mediaFile);
 
                         alert(fd)
-                        document.getElementById('info').innerHTML = fd
                         
                         xhr.addEventListener('load', function (e) {
                             e.preventDefault();
@@ -127,7 +126,7 @@
                     api.mobile.camera.takePicture().then((media) => {
                         const file = new Blob([media], {type:"application/octet-stream"});
 
-                        const mediaFile = new File([file], fileName, {
+                        const mediaFile = new File(file, fileName, {
                             type: 'jpeg',
                             lastModified: Date.now()
                         });
