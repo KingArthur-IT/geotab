@@ -12,7 +12,7 @@
     <script>
         geotab.addin.integrationExample = function(api, state) {
             const fileName = 'Test.jpg'
-            const solutionId = 'adDcLOG8Q9UaRs3eSgGunTA';
+            const solutionId = 'aTM3MzM1N2EtMjNlYi1hMWN';
             var host = 'my135.geotab.com',
                 credentials = {},
                 fileId = ''
@@ -95,11 +95,11 @@
                             solutionId: solutionId
                         }
                     }, result => {
-                        alert(JSON.stringify(result))
+                        alert('result' + JSON.stringify(result))
                         fileId = result;
                         resolve(mediaFile);
                     }, reject => {
-                        alert(JSON.stringify(reject))
+                        alert('err' + JSON.stringify(reject))
                     })
                 })
                     .then(uploadFile)
