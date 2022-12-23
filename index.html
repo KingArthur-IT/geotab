@@ -24,9 +24,9 @@
                     document.getElementById('info').innerHTML = 'load'
                     const elem = document.createElement('canvas');
 
-                    const scaleFactor = width / img.width;
+                    const scaleFactor = width / document.getElementById('photo').clientWidth;
                     elem.width = width;
-                    elem.height = img.height * scaleFactor;
+                    elem.height = document.getElementById('photo').clientHeight * scaleFactor;
 
                     const ctx = elem.getContext('2d');
                     document.getElementById('info').innerHTML = 'bef draw'
