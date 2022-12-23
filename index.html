@@ -18,6 +18,40 @@
                 credentials = {},
                 fileId = ''
 
+            const resizeImage = (mediaFile, width) => {
+                return new Promise((resolve, reject) => {
+                    const contentType = getContentType(mediaFile);
+
+                    const reader = new FileReader();
+
+                    reader.readAsDataURL(mediaFile);
+                    reader.onerror = reject;
+                    reader.onload = event => {
+                        const img = new Image();
+                        img.src = event.target.result;
+                        img.onload = () => {
+                            const elem = document.createElement('canvas');
+
+                            const scaleFactor = width / img.width;
+                            elem.width = width;
+                            elem.height = img.height * scaleFactor;
+
+                            const ctx = elem.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
+                            ctx.canvas.toBlob((blob) => {
+                                mediaFile = new File([blob], fileName, {
+                                    type: contentType,
+                                    lastModified: Date.now()
+                                });
+
+                                resolve(mediaFile);
+                            }, contentType, 1);
+                        };
+                    };
+                });
+
+            }
+
             const uploadFile = (mediaFile) => {
                 return new Promise((resolve, reject) => {
                     var fd = new FormData();
@@ -27,13 +61,12 @@
                         params: {
                             credentials: credentials,
                             mediaFile: { 'id': imgId },
-                            stream: mediaFile
                         }
                     };
                     let xhr = new XMLHttpRequest();
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        // fd.append('Test6', mediaFile);
+                        fd.append('Test6', mediaFile);
 
                         alert(fd)
                         
@@ -125,12 +158,14 @@
             const takePhoto = () => {
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
-                        const file = new Blob([media], {type:"application/octet-stream"});
+                        // const file = new Blob([media], {type:"application/octet-stream"});
 
-                        const mediaFile = new File([file], fileName);
+                        // const mediaFile = new File([file], fileName);
 
                         // upload(media);
-                        uploadFile(mediaFile)
+
+                        resizeImage(media, 480).then(uploadFile)
+                        // uploadFile(mediaFile)
                     });
                 }
             };
