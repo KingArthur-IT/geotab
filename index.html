@@ -30,9 +30,7 @@
                     elem.height = document.getElementById('photo').clientHeight * scaleFactor;
 
                     const ctx = elem.getContext('2d');
-                    alert('1')
                     ctx.drawImage(document.getElementById('photo'), 0, 0, width, elem.height);
-                    alert('2')
                     ctx.canvas.toBlob((blob) => {
                         mediaFile = new File([blob], fileName, {
                             type: contentType,
@@ -47,8 +45,8 @@
 
             const uploadFile = () => {
                 return new Promise((resolve, reject) => {
+                    alert('1', mediaFile)
                     var fd = new FormData();
-                    const file = mediaFile;
                     var parameters = {
                         method: 'UploadMediaFile',
                         params: {
