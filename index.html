@@ -51,22 +51,13 @@
                         method: 'UploadMediaFile',
                         params: {
                             credentials: credentials,
-                            mediaFile: {
-                                typeName: 'MediaFile',
-                                type: 'MediaFile',
-                                id: imgId,
-                                file: document.getElementById('photo').getAttribute('src'),
-                                name: fileName,
-                                fromDate: new Date(),
-                                solutionId: solutionId,
-                            },
-                            stream: document.getElementById('photo').getAttribute('src')
+                            mediaFile: { 'id': mediaFile.id }
                         }
                     };
                     let xhr = new XMLHttpRequest();
                     if (true) {
                         fd.append('JSON-RPC', JSON.stringify(parameters));
-                        fd.append(fileName, document.getElementById('photo').getAttribute('src'));
+                        fd.append(fileName, mediaFile, fileName);
 
                         alert(fd)
                         
