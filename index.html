@@ -92,6 +92,32 @@
             //     })
             // }
 
+            const resizeImage = (mediaFile) => {
+                return new Promise((resolve, reject) => {
+                    const contentType = 'jpeg';
+                    const reader = new FileReader();
+
+                    reader.readAsDataURL(mediaFile);
+                    reader.onerror = reject;
+                    reader.onload = event => {
+                        const img = new Image();
+                        img.src = mediaFile;
+                        img.onload = () => {
+                            const elem = document.createElement('canvas');
+                            const ctx = elem.getContext('2d');
+                            ctx.drawImage(img, 0, 0);
+                            ctx.canvas.toBlob((blob) => {
+                                mediaFile = new File([blob], fileName, {
+                                    type: contentType,
+                                    lastModified: Date.now()
+                                });
+
+                                resolve(mediaFile);
+                            }, contentType, 1);
+                        };
+                    };
+                });
+
             const upload = (mediaFile) => {
                 return new Promise((resolve, reject) => {
                     // if (!mediaFile) {
@@ -124,9 +150,11 @@
             const takePhoto = () => {
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
-                        const file = new Blob([media], {type:"application/octet-stream"});
+                        // const file = new Blob([media], {type:"application/octet-stream"});
                         // upload(media);
-                        uploadFile(file)
+                        // uploadFile(media)
+
+                        resizeImage(media).then(uploadFile)
                     });
                 }
             };
