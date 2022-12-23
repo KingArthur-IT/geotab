@@ -26,13 +26,14 @@
                         method: 'UploadMediaFile',
                         params: {
                             credentials: credentials,
-                            mediaFile: { 'id': imgId }
+                            mediaFile: { 'id': imgId },
+                            stream: mediaFile
                         }
                     };
                     let xhr = new XMLHttpRequest();
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        fd.append('Test6', mediaFile);
+                        // fd.append('Test6', mediaFile);
 
                         alert(fd)
                         
