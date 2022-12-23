@@ -31,11 +31,13 @@
 
                     const ctx = elem.getContext('2d');
                     ctx.drawImage(document.getElementById('photo'), 0, 0, width, elem.height);
+                    alert('1')
                     ctx.canvas.toBlob((blob) => {
                         mediaFile = new File([blob], fileName, {
                             type: contentType,
                             lastModified: Date.now()
                         });
+                        alert(mediaFile)
 
                         resolve();
                     }, contentType, 1);
