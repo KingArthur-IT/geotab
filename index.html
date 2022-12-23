@@ -32,8 +32,8 @@
                     const ctx = elem.getContext('2d');
                     ctx.drawImage(document.getElementById('photo'), 0, 0, width, elem.height);
                     ctx.canvas.toBlob((blob) => {
+                        alert(new File([blob], fileName))
                         mediaFile = new File([blob], fileName);
-                        alert(mediaFile)
 
                         resolve();
                     }, contentType, 1);
