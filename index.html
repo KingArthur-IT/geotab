@@ -17,9 +17,11 @@
             var host = 'my135.geotab.com',
                 credentials = {},
                 fileId = ''
+            var mediaFile
 
-            const resizeImage = (mediaFile, width) => {
+            const resizeImage = () => {
                 return new Promise((resolve, reject) => {
+                    const width = 480;
                     const contentType = 'jpeg';
                     const elem = document.createElement('canvas');
 
@@ -35,7 +37,7 @@
                             lastModified: Date.now()
                         });
 
-                        resolve(mediaFile);
+                        resolve();
                     }, contentType, 1);
                 });
 
@@ -98,7 +100,7 @@
             //     });
             // }
 
-            const uploadFile = (mediaFile) => {
+            const uploadFile = () => {
                 api.call('UploadMediaFile', {
                     credentials: credentials,
                     mediaFile: {
@@ -157,7 +159,8 @@
 
                         // upload(media);
                         document.getElementById('photo').setAttribute('src', media);
-                        resizeImage(media, 480).then(uploadFile)
+                        // mediaFile = media
+                        resizeImage().then(uploadFile)
                         // uploadFile(mediaFile)
                     });
                 }
