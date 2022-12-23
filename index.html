@@ -27,13 +27,16 @@
                             mediaFile: { 'id': fileId }
                         }
                     };
+                    document.getElementById('info').innerHTML = 'pre file';
                     let xhr = new XMLHttpRequest();
                     if (file) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         fd.append(fileName, file, fileName);
+                        document.getElementById('info').innerHTML = 'file';
 
                         xhr.addEventListener('load', function (e) {
                             e.preventDefault();
+                            document.getElementById('info').innerHTML = 'load';
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
@@ -59,9 +62,11 @@
                         }, false);
                         xhr.open('POST', `https://${host}/apiv1/`);
                         xhr.setRequestHeader('Accept', 'application/json, */*;q=0.8');
-                        console.log('Uploading...');
+                        document.getElementById('info').innerHTML = 'open'
                         try {
                             xhr.send(fd);
+                            document.getElementById('info').innerHTML = 'send';
+                            document.getElementById('photo').setAttribute('src', mediaFile);
                         } catch (e) {
                             reject(e);
                         }
