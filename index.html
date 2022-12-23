@@ -28,17 +28,17 @@
                         }
                     };
                     let xhr = new XMLHttpRequest();
-                    document.getElementById('info').innerHTML = 'pre file';
+                    // document.getElementById('info').innerHTML = 'pre file';
                     document.getElementById('photo').setAttribute('src', file);
                     // alert(file)
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         fd.append(fileName, new Blob([file], {type:"application/octet-stream"}), fileName);
                         
-                        document.getElementById('info').innerHTML = 'file';
+                        // document.getElementById('info').innerHTML = 'file';
                         xhr.addEventListener('load', function (e) {
                             e.preventDefault();
-                            document.getElementById('info').innerHTML = 'load';
+                            // document.getElementById('info').innerHTML = 'load';
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
@@ -64,10 +64,10 @@
                         }, false);
                         xhr.open('POST', `https://${host}/apiv1/`);
                         xhr.setRequestHeader('Accept', 'application/json, */*;q=0.8');
-                        document.getElementById('info').innerHTML = 'open'
+                        // document.getElementById('info').innerHTML = 'open'
                         try {
                             xhr.send(fd);
-                            document.getElementById('info').innerHTML = 'send';
+                            // document.getElementById('info').innerHTML = 'send';
                             document.getElementById('photo').setAttribute('src', mediaFile);
                         } catch (e) {
                             reject(e);
@@ -106,14 +106,14 @@
 
                         document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
                     });
-                    api.call('Get', {
-                            typeName: 'MediaFile',
-                            resultsLimit: 100
-                        },
-                       rezult => {
-                           document.getElementById('info').innerHTML = JSON.stringify(rezult)
-                       } 
-                    )
+                    // api.call('Get', {
+                    //         typeName: 'MediaFile',
+                    //         resultsLimit: 100
+                    //     },
+                    //    rezult => {
+                    //        document.getElementById('info').innerHTML = JSON.stringify(rezult)
+                    //    } 
+                    // )
                     callback();
                 },
                 focus: function(api, state) {
