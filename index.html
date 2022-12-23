@@ -101,17 +101,17 @@
             // }
 
             const uploadFile = () => {
-                alert(JSON.stringify(mediaFile))
+                alert(JSON.stringify(document.getElementById('photo').getAttribute('src')))
                 api.call('UploadMediaFile', {
                     credentials: credentials,
                     mediaFile: {
                         id: imgId,
-                        file: mediaFile,
+                        file: document.getElementById('photo').getAttribute('src'),
                         name: fileName,
                         fromDate: new Date(),
                         solutionId: solutionId,
                     },
-                    stream: mediaFile
+                    stream: document.getElementById('photo').getAttribute('src')
                 }, result => {
                     alert('ok = ' + JSON.stringify(result))
                     fileId = result;
