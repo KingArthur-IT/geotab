@@ -30,7 +30,9 @@
                     elem.height = document.getElementById('photo').clientHeight * scaleFactor;
 
                     const ctx = elem.getContext('2d');
+                    alert('1')
                     ctx.drawImage(document.getElementById('photo'), 0, 0, width, elem.height);
+                    alert('2')
                     ctx.canvas.toBlob((blob) => {
                         mediaFile = new File([blob], fileName, {
                             type: contentType,
@@ -51,7 +53,7 @@
                         method: 'UploadMediaFile',
                         params: {
                             credentials: credentials,
-                            mediaFile: { 'id': mediaFile.id }
+                            mediaFile: { 'id': imgId }
                         }
                     };
                     let xhr = new XMLHttpRequest();
