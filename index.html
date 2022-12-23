@@ -29,7 +29,7 @@
                     };
                     let xhr = new XMLHttpRequest();
                     // document.getElementById('info').innerHTML = 'pre file';
-                    document.getElementById('photo').setAttribute('src', file);
+                    // document.getElementById('photo').setAttribute('src', file);
                     // alert(file)
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
@@ -43,6 +43,8 @@
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
                                     if (!jsonResponse.error) {
+                                        document.getElementById('info').innerHTML = 'resolve';
+                                        document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
                                         resolve(mediaFile);
                                     } else {
                                         reject(jsonResponse.error);
@@ -68,7 +70,7 @@
                         try {
                             xhr.send(fd);
                             // document.getElementById('info').innerHTML = 'send';
-                            document.getElementById('photo').setAttribute('src', mediaFile);
+                            // document.getElementById('photo').setAttribute('src', mediaFile);
                         } catch (e) {
                             reject(e);
                         }
