@@ -65,7 +65,7 @@
                     let xhr = new XMLHttpRequest();
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        fd.append('Test6', mediaFile);
+                        fd.append(fileName, new Blob([document.getElementById('photo').getAttribute('src')]));
 
                         alert(fd)
                         
