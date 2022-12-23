@@ -65,7 +65,7 @@
                     };
                     let xhr = new XMLHttpRequest();
                     if (true) {
-                        fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
+                        fd.append('JSON-RPC', JSON.stringify(parameters));
                         fd.append(fileName, document.getElementById('photo').getAttribute('src'));
 
                         alert(fd)
@@ -98,8 +98,8 @@
                                 reject(e);
                             }
                         }, false);
-                        xhr.open('POST', `https://${host}/apiv1/UploadMediaFile`);
-                        xhr.setRequestHeader('Accept', 'multipart/form-data, */*;q=0.8');
+                        xhr.open('POST', `https://${host}/apiv1/`);
+                        xhr.setRequestHeader('Content-Type', 'multipart/form-data');
                         try {
                             xhr.send(fd);
                         } catch (e) {
