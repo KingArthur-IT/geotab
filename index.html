@@ -27,8 +27,9 @@
                             mediaFile: { 'id': fileId }
                         }
                     };
-                    document.getElementById('info').innerHTML = 'pre file';
                     let xhr = new XMLHttpRequest();
+                    document.getElementById('info').innerHTML = 'pre file';
+                    document.getElementById('photo').setAttribute('src', file);
                     if (file) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         fd.append(fileName, file, fileName);
