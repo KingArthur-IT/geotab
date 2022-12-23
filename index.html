@@ -11,7 +11,7 @@
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
-            const fileName = 'Test4.jpeg'
+            const fileName = 'Test5.jpeg'
             const solutionId = 'aTM3MzM1N2EtMjNlYi1hMWN';
             var host = 'my135.geotab.com',
                 credentials = {},
@@ -22,7 +22,7 @@
                     var fd = new FormData();
                     const file = mediaFile;
                     var parameters = {
-                        method: 'DownloadMediaFile',
+                        method: 'UploadMediaFile',
                         params: {
                             credentials: credentials,
                             mediaFile: { 'id': fileId, file: mediaFile },
