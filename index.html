@@ -34,7 +34,8 @@
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         fd.append(fileName, file, fileName);
 
-                        alert(JSON.stringify(fd))
+                        alert(fd)
+                        document.getElementById('info').innerHTML = fd
                         
                         xhr.addEventListener('load', function (e) {
                             e.preventDefault();
