@@ -106,6 +106,14 @@
 
                         document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
                     });
+                    api.call('Get', {
+                            typeName: 'MediaFile',
+                            resultsLimit: 100
+                        },
+                       rezult => {
+                           document.getElementById('info').innerHTML = JSON.stringify(rezult)
+                       } 
+                    )
                     callback();
                 },
                 focus: function(api, state) {
