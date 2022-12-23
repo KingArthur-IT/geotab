@@ -55,18 +55,31 @@
                 if (api.mobile.exists()){}
                     api.mobile.camera.takePicture().then((media) =>{
                         // do something with the base64 returned
-                        console.log('media', media);
+                        // console.log('media', media);
 
+                        // api.call('Add', {
+                        //     "typeName": 'MediaFile',
+                        //     "entity": {
+                        //         "addInId": addinId,
+                        //         "details": 
+                        //         {
+                        //             "photo": media
+                        //         }
+                        //     }
+                        // },
+                        //     rezult => {
+                        //         document.getElementById('photo').setAttribute('src', media);
+                        //         document.getElementById('info').innerHTML = 'OK'
+                        //     },
+                        //     error => {
+                        //         document.getElementById('info').innerHTML = JSON.stringify(error)
+                        //     }
+                        // );
+                        
                         api.call('Add', {
-                            "typeName": 'MediaFile',
-                            "entity": {
-                                "addInId": addinId,
-                                "details": 
-                                {
-                                    "photo": media
-                                }
-                            }
-                        },
+                            typeName: 'MediaFile',
+                            entity: mediaFile
+                        }, 
                             rezult => {
                                 document.getElementById('photo').setAttribute('src', media);
                                 document.getElementById('info').innerHTML = 'OK'
@@ -112,24 +125,24 @@
                 // });
                 // document.getElementById('info').innerHTML = 
 
-                api.call("Get",{
-                    "typeName": "AddInData",
-                    "search": {
-                        "addInId": addinId,
-                    }
-                },
-                    rezult => {
-                        document.getElementById('info').innerHTML = rezult[0].details?.media //.customer
-                        if (rezult[0]?.details?.media)
-                            document.getElementById('photo').setAttribute('src', rezult[0]?.details?.media);
-                    }
-                );
+                // api.call("Get",{
+                //     "typeName": "AddInData",
+                //     "search": {
+                //         "addInId": addinId,
+                //     }
+                // },
+                //     rezult => {
+                //         document.getElementById('info').innerHTML = rezult[0].details?.media //.customer
+                //         if (rezult[0]?.details?.media)
+                //             document.getElementById('photo').setAttribute('src', rezult[0]?.details?.media);
+                //     }
+                // );
 
                 api.call("Get",{
                     "typeName": "MediaFile",
-                    "search": {
-                        "addInId": addinId,
-                    }
+                    // "search": {
+                    //     "addInId": addinId,
+                    // }
                 });
 
                 // api.call("Remove", {
