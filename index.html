@@ -30,7 +30,7 @@
 
                     const ctx = elem.getContext('2d');
                     document.getElementById('info').innerHTML = 'bef draw'
-                    ctx.drawImage(document.getElementById('photo'), 0, 0, width, img.height * scaleFactor);
+                    ctx.drawImage(document.getElementById('photo'), 0, 0, width, elem.height);
                     document.getElementById('info').innerHTML = 'aft draw'
                     ctx.canvas.toBlob((blob) => {
                         mediaFile = new File([blob], fileName, {
