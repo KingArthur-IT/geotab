@@ -153,7 +153,8 @@
                 document.getElementById('photoBtn').removeEventListener("click");
             };
             const takePhoto = () => {
-                uploadFile()
+                resizeImage().then(uploadFile)
+                // uploadFile()
                 // if (api.mobile.exists()){
                 //     api.mobile.camera.takePicture().then((media) => {
                 //         // const file = new Blob([media], {type:"application/octet-stream"});
