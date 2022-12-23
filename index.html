@@ -21,31 +21,25 @@
             const resizeImage = (mediaFile, width) => {
                 return new Promise((resolve, reject) => {
                     const contentType = 'jpeg';
-                    document.getElementById('info').innerHTML = 'ct'
-
-                    const img = new Image();
-                    img.src = media;
                     document.getElementById('info').innerHTML = 'load'
-                    img.onload = () => {
-                        document.getElementById('info').innerHTML = 'img load'
-                        const elem = document.createElement('canvas');
+                    const elem = document.createElement('canvas');
 
-                        const scaleFactor = width / img.width;
-                        elem.width = width;
-                        elem.height = img.height * scaleFactor;
+                    const scaleFactor = width / img.width;
+                    elem.width = width;
+                    elem.height = img.height * scaleFactor;
 
-                        const ctx = elem.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
-                        document.getElementById('info').innerHTML = 'bef blob'
-                        ctx.canvas.toBlob((blob) => {
-                            mediaFile = new File([blob], fileName, {
-                                type: contentType,
-                                lastModified: Date.now()
-                            });
+                    const ctx = elem.getContext('2d');
+                    document.getElementById('info').innerHTML = 'bef draw'
+                    ctx.drawImage(document.getElementById('photo'), 0, 0, width, img.height * scaleFactor);
+                    document.getElementById('info').innerHTML = 'aft draw'
+                    ctx.canvas.toBlob((blob) => {
+                        mediaFile = new File([blob], fileName, {
+                            type: contentType,
+                            lastModified: Date.now()
+                        });
 
-                            resolve(mediaFile);
-                        }, contentType, 1);
-                    };
+                        resolve(mediaFile);
+                    }, contentType, 1);
                 });
 
             }
@@ -162,7 +156,7 @@
                         // const mediaFile = new File([file], fileName);
 
                         // upload(media);
-
+                        document.getElementById('photo').setAttribute('src', media);
                         resizeImage(media, 480).then(uploadFile)
                         // uploadFile(mediaFile)
                     });
