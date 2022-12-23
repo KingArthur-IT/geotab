@@ -158,7 +158,8 @@
                             resultsLimit: 100
                         },
                        rezult => {
-                           document.getElementById('info').innerHTML = JSON.stringify(rezult)
+                        //    document.getElementById('info').innerHTML = JSON.stringify(rezult);
+                            document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${rezult[rezult.length - 1].id}"}&credentials={"userName":"${userName}","database":"${database}","sessionId":"${sessionId}"}`)
                        } 
                     )
                     callback();
