@@ -85,7 +85,8 @@
                     credentials: credentials,
                     mediaFile: {
                         id: imgId,
-                        file: mediaFile
+                        file: mediaFile,
+                        stream: mediaFile,
                     }
                 }, result => {
                     alert('ok = ' + JSON.stringify(result))
@@ -129,7 +130,7 @@
                     api.mobile.camera.takePicture().then((media) => {
                         const file = new Blob([media], {type:"application/octet-stream"});
                         // upload(media);
-                        uploadFile(media)
+                        uploadFile(file)
                     });
                 }
             };
