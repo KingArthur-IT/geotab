@@ -115,11 +115,11 @@
 
                         fetch(media).then(res => res.blob())
                             .then(blob => {
-                                mediaFile = new File([blob], fileName, { type: "image/jpeg" })
+                                mediaFile = new File([blob], fileName, { type: "image/jpeg" });
+                                alert(mediaFile)
+                                uploadFile()
                             });
-                        alert(mediaFile)
-
-                        uploadFile()
+                        
                         // upload().then(uploadFile)
                     });
                 }
