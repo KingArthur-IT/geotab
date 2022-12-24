@@ -45,8 +45,8 @@
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
                                     if (!jsonResponse.error) {
-                                        document.getElementById('info').innerHTML = 'resolve';
-                                        document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
+                                        document.getElementById('info').innerHTML = getImgUrl(fileId);
+                                        document.getElementById('photo').setAttribute('src', getImgUrl(fileId));
                                         resolve(mediaFile);
                                     } else {
                                         reject(jsonResponse.error);
@@ -130,6 +130,10 @@
                 });
             }
 
+            const getImgUrl = (id) => {
+                return `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`
+            }
+
             return {
                 initialize: function(api, state, callback) {
                     api.getSession(cr => {
@@ -143,17 +147,23 @@
                         credentials = cr.credentials || cr;
 
                         // document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
+                        document.getElementById('photo').setAttribute('src', getImgUrl(fileId));
                     });
                     api.call('Get', {
                             typeName: 'MediaFile',
                             resultsLimit: 100
                         },
                        rezult => {
-                            // document.getElementById('info').innerHTML = JSON.stringify(rezult);
-                            // document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${rezult[rezult.length - 1].id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`)
+                           rezult.forEach(element => {
+                               if (element.status === 'Ready'){
+                                    const cloneNode = document.querySelector('.info__parent').cloneNode(true);
+                                    document.querySelector('.info').appendChild(cloneNode);
+                                    cloneNode.querySelector('img').setAttribute('src', getImgUrl(element.id));
+                                    cloneNode.querySelector('p').innerHTML = element.name;
+                               }
+                           });
                        } 
                     );
-                    document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
                     callback();
                 },
                 focus: function(api, state) {
@@ -170,7 +180,14 @@
     <div id="center">
         <button id="photoBtn">Take a photo</button>
         <img src="" id="photo" alt="photo">
-        <pre id="info"></pre>
+        <div id="info"></div>
+        <p>List of images</p>
+        <div class="info">
+            <div class="info__parent">
+                <p></p>
+                <img src="" alt="" width="200px" height="200px">
+            </div>
+        </div>
     </div>
 </body>
 </html>
