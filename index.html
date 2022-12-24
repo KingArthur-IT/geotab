@@ -11,89 +11,86 @@
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
-            const fileName = 'Test7.jpeg'
+            const fileName = 'Test6.jpeg'
             const solutionId = 'aTM3MzM1N2EtMjNlYi1hMWN';
-            const imgId = 'akZ_h84l6SkmxZeJnpK8KQw'
             var host = 'my135.geotab.com',
                 credentials = {},
-                fileId = ''
+                fileId =  'akZ_h84l6SkmxZeJnpK8KQw' //''
             var mediaFile
 
-            // const resizeImage = () => {
+            // const uploadFile = () => {
             //     return new Promise((resolve, reject) => {
-            //         const width = 480;
-            //         const contentType = 'jpeg';
-            //         const elem = document.getElementById('canvas');
-
-            //         const scaleFactor = width / document.getElementById('photo').clientWidth;
-            //         elem.width = width;
-            //         elem.height = document.getElementById('photo').clientHeight * scaleFactor;
-
-            //         const ctx = elem.getContext('2d');
-            //         ctx.drawImage(document.getElementById('photo'), 0, 0, width, elem.height);
-            //         elem.toBlob((blob) => {
-            //             alert(new File([blob], fileName))
-            //             mediaFile = new File([blob], fileName);
-
-            //             resolve();
-            //         }, contentType, 1);
+            //         var fd = new FormData();
+            //         var parameters = {
+            //             method: 'UploadMediaFile',
+            //             params: {
+            //                 credentials: credentials,
+            //                 mediaFile: { 'id': fileId }
+            //             }
+            //         };
+            //         let xhr = new XMLHttpRequest();
+            //         if (true) {
+            //             fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
+            //             fd.append(fileName, mediaFile, fileName);
+                        
+            //             xhr.addEventListener('load', function (e) {
+            //                 e.preventDefault();
+            //                 alert(`Загружено: ${xhr.status} ${xhr.response}`);
+            //                 alert(JSON.stringify(e))
+            //                 if (e.target && e.target['responseText'].length > 0) {
+            //                     try {
+            //                         let jsonResponse = JSON.parse(e.target['responseText']);
+            //                         if (!jsonResponse.error) {
+            //                             document.getElementById('info').innerHTML = 'resolve';
+            //                             document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
+            //                             resolve(mediaFile);
+            //                         } else {
+            //                             reject(jsonResponse.error);
+            //                         }
+            //                     } catch (e) {
+            //                         reject(e);
+            //                     }
+            //                 } else {
+            //                     reject(e);
+            //                     xhr && xhr.abort();
+            //                 }
+            //             }, false);
+            //             xhr.addEventListener('error', function (e) {
+            //                 if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
+            //                     reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
+            //                 } else {
+            //                     reject(e);
+            //                 }
+            //             }, false);
+            //             xhr.open('POST', `https://${host}/apiv1/`, true);
+            //             xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+            //             try {
+            //                 xhr.send(fd)
+            //             } catch (e) {
+            //                 reject(e);
+            //             }
+            //         }
             //     });
-
             // }
 
             const uploadFile = () => {
                 return new Promise((resolve, reject) => {
-                    var fd = new FormData();
-                    var parameters = {
-                        method: 'UploadMediaFile',
-                        params: {
+                    api.call('Add', {
+                        typeName: 'MediaFile',
+                        entity: {
+                            method: 'UploadMediaFile',
                             credentials: credentials,
-                            mediaFile: { 'id': fileId }
+                            mediaFile: { 'id': fileId },
+                            file: mediaFile,
+                            stream: mediaFile
                         }
-                    };
-                    let xhr = new XMLHttpRequest();
-                    if (true) {
-                        fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        fd.append(fileName, mediaFile, fileName);
-                        
-                        xhr.addEventListener('load', function (e) {
-                            e.preventDefault();
-                            alert(`Загружено: ${xhr.status} ${xhr.response}`);
-                            alert(JSON.stringify(e))
-                            if (e.target && e.target['responseText'].length > 0) {
-                                try {
-                                    let jsonResponse = JSON.parse(e.target['responseText']);
-                                    if (!jsonResponse.error) {
-                                        document.getElementById('info').innerHTML = 'resolve';
-                                        document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
-                                        resolve(mediaFile);
-                                    } else {
-                                        reject(jsonResponse.error);
-                                    }
-                                } catch (e) {
-                                    reject(e);
-                                }
-                            } else {
-                                reject(e);
-                                xhr && xhr.abort();
-                            }
-                        }, false);
-                        xhr.addEventListener('error', function (e) {
-                            if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
-                                reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
-                            } else {
-                                reject(e);
-                            }
-                        }, false);
-                        xhr.open('POST', `https://${host}/apiv1/`, true);
-                        xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-                        try {
-                            xhr.send(fd)
-                        } catch (e) {
-                            reject(e);
-                        }
-                    }
-                });
+                    }, result => {
+                        alert('ok = ' + JSON.stringify(result))
+                        resolve();
+                    }, reject => {
+                        alert('err = ' + JSON.stringify(reject))
+                    })
+                }).then(uploadFile)
             }
 
             const upload = () => {
@@ -127,15 +124,10 @@
             const takePhoto = () => {
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
-                        // const file = new Blob([media], {type:"application/octet-stream"});
-
-                        // const mediaFile = new File([file], fileName);
-
-                        // upload(media);
                         document.getElementById('photo').setAttribute('src', media);
                         mediaFile = new File([new Blob([media])], fileName);
-                        // uploadFile()
-                        upload().then(uploadFile)
+                        uploadFile()
+                        // upload().then(uploadFile)
                     });
                 }
             };
@@ -164,7 +156,7 @@
                             resultsLimit: 100
                         },
                        rezult => {
-                        //    document.getElementById('info').innerHTML = JSON.stringify(rezult);
+                            // document.getElementById('info').innerHTML = JSON.stringify(rezult);
                             // document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${rezult[rezult.length - 1].id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`)
                        } 
                     )
@@ -183,9 +175,8 @@
 <body>
     <div id="center">
         <button id="photoBtn">Take a photo</button>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Hakea_verrucosa.JPG" id="photo" alt="photo">
+        <img src="" id="photo" alt="photo">
         <pre id="info"></pre>
-        <canvas id="canvas"></canvas>
     </div>
 </body>
 </html>
