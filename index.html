@@ -157,7 +157,7 @@
                         // xhr.send(fd)
 
                         fetch(url, {method: 'POST', body: fd}).then(res => {
-                            const buffer = await response.arrayBuffer();
+                            const buffer = response.arrayBuffer();
                             alert(buffer)
                             const bytes = new Uint8Array(buffer);
                             const blob = new Blob([bytes.buffer]);
