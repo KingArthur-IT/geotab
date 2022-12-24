@@ -107,7 +107,7 @@
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         xhr.addEventListener('load', function (e) {
-                            alert(`Загружено: ${xhr.status} ${xhr.response}`);
+                            alert(`Загружено: ${xhr.status} ${xhr}`);
                             alert(JSON.stringify(e))
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
@@ -207,7 +207,7 @@
                         credentials = cr.credentials || cr;
 
                         // document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
-                        document.getElementById('photo').setAttribute('data-src', 'https://my135.geotab.com/apiv1/DownloadMediaFile?mediaFile={"id":"akZ_h84l6SkmxZeJnpK8KQw"}&credentials={"userName":"andrew.tolstov%40gmail.com","database":"gogps","sessionId":"0IoNjd7Q2_lUKZeUDd7csA"}')
+                        // document.getElementById('photo').setAttribute('data-src', 'https://my135.geotab.com/apiv1/DownloadMediaFile?mediaFile={"id":"akZ_h84l6SkmxZeJnpK8KQw"}&credentials={"userName":"andrew.tolstov%40gmail.com","database":"gogps","sessionId":"0IoNjd7Q2_lUKZeUDd7csA"}')
                         downloadFile()
                     });
                     api.call('Get', {
