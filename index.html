@@ -89,7 +89,7 @@
                 });
             }
 
-            const downloadFile = () => {
+            const downloadFile = (imgTagId = 'photo') => {
                 return new Promise((resolve, reject) => {
                     var fd = new FormData();
                     var parameters = {
@@ -113,8 +113,7 @@
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
                                     if (!jsonResponse.error) {
-                                        // document.getElementById('info').innerHTML = getImgUrl(fileId);
-                                        // document.getElementById('photo').setAttribute('src', getImgUrl(fileId));
+                                        document.getElementById(imgTagId).setAttribute('src', xhr.response);
                                         resolve();
                                     } else {
                                         reject(jsonResponse.error);
