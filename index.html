@@ -107,15 +107,15 @@
                 document.getElementById('photoBtn').removeEventListener("click");
             };
             const takePhoto = () => {
-                uploadFile();
-                // if (api.mobile.exists()){
-                //     api.mobile.camera.takePicture().then((media) => {
-                //         document.getElementById('photo').setAttribute('src', media);
-                //         mediaFile = new Blob([media]); // new File([new Blob([media])], fileName);
-                //         uploadFile()
-                //         // upload().then(uploadFile)
-                //     });
-                // }
+                // uploadFile();
+                if (api.mobile.exists()){
+                    api.mobile.camera.takePicture().then((media) => {
+                        document.getElementById('photo').setAttribute('src', media);
+                        mediaFile = new Blob([media]); // new File([new Blob([media])], fileName);
+                        uploadFile()
+                        // upload().then(uploadFile)
+                    });
+                }
             };
             const refreshPage = () => {
                 document.getElementById('photoBtn').addEventListener('click', () => {
