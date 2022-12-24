@@ -110,22 +110,17 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             alert(JSON.stringify(e))
 
-                            var c = document.getElementById("canvas");
-                            var ctx = c.getContext("2d");
-                            ctx.drawImage(xhr.response, 0, 0);
-                            resolve();
-                            // const buffer = xhr.response.arrayBuffer();
-                            // const bytes = new Uint8Array(xhr.response);
-                            // const blob = new Blob([bytes.buffer]);
+                            const reader = new FileReader()
+                            reader.onload = function(e) {
+                                alert(reader.result)
+                                let arrayBuffer = new Uint8Array(reader.result);
+                                console.log(arrayBuffer);
+                                resolve();
+                            }
+                            reader.readAsArrayBuffer(xhr.response)
 
-                            // const reader = new FileReader();
-
-                            // reader.addEventListener('load', (e) => {
-                            //     document.getElementById(imgTagId).setAttribute('src', e.target.result);
-                            //     resolve()
-                            // });
-
-                            // reader.readAsDataURL(blob);
+                            
+                            
 
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
