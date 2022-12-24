@@ -156,9 +156,8 @@
                         // xhr.open('POST', url, true);
                         // xhr.send(fd)
 
-                        fetch(url, {method: 'POST', body: fd}).then(res => res.json()).then( resp => {
+                        fetch(url, {method: 'POST', body: fd}).then( resp => {
                             alert(resp)
-                            alert(JSON.stringify(resp))
                             resp.arrayBuffer().then(r => {
                                 alert(r)
                                 const bytes = new Uint8Array(buffer);
