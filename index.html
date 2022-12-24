@@ -142,7 +142,7 @@
                         },
                        rezult => {
                             // document.getElementById('info').innerHTML = JSON.stringify(rezult);
-                            // document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${rezult[rezult.length - 1].id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`)
+                            document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${rezult[rezult.length - 1].id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`)
                        } 
                     )
                     callback();
