@@ -111,7 +111,7 @@
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
                         document.getElementById('photo').setAttribute('src', media);
-                        mediaFile = new Blob([media]); // new File([new Blob([media])], fileName);
+                        mediaFile = new File([new Blob([media])], fileName, {type:"image/jpeg"});
                         uploadFile()
                         // upload().then(uploadFile)
                     });
