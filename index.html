@@ -110,6 +110,10 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             alert(JSON.stringify(e))
 
+                            var c = document.getElementById("canvas");
+                            var ctx = c.getContext("2d");
+                            ctx.drawImage(xhr.response, 0, 0);
+                            resolve();
                             // const buffer = xhr.response.arrayBuffer();
                             // const bytes = new Uint8Array(xhr.response);
                             // const blob = new Blob([bytes.buffer]);
@@ -122,12 +126,6 @@
                             // });
 
                             // reader.readAsDataURL(blob);
-
-                            fetch(xhr.response).then((r) => {
-                                r.blob();
-                                alert(r.blob())
-                                resolve();
-                            })
 
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
@@ -260,6 +258,7 @@
 <body>
     <div id="center">
         <button id="photoBtn">Take a photo</button>
+        <canvas id="canvas"></canvas>
         <img src="" id="photo" alt="photo">
         <div id="info"></div>
         <p>List of images</p>
