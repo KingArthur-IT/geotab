@@ -89,6 +89,60 @@
                 });
             }
 
+            const downloadFile = () => {
+                return new Promise((resolve, reject) => {
+                    var fd = new FormData();
+                    var parameters = {
+                        method: 'DownloadMediaFile',
+                        params: {
+                            credentials: {
+                                userName: credentials.userName,
+                                database: credentials.database,
+                                sessionId: credentials.sessionId
+                            },
+                            mediaFile: { 'id': fileId }
+                        }
+                    };
+                    let xhr = new XMLHttpRequest();
+                    if (true) {
+                        fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
+                        xhr.addEventListener('load', function (e) {
+                            alert(`Загружено: ${xhr.status} ${xhr.response}`);
+                            alert(JSON.stringify(e))
+                            if (e.target && e.target['responseText'].length > 0) {
+                                try {
+                                    let jsonResponse = JSON.parse(e.target['responseText']);
+                                    if (!jsonResponse.error) {
+                                        // document.getElementById('info').innerHTML = getImgUrl(fileId);
+                                        // document.getElementById('photo').setAttribute('src', getImgUrl(fileId));
+                                        resolve();
+                                    } else {
+                                        reject(jsonResponse.error);
+                                    }
+                                } catch (e) {
+                                    reject(e);
+                                }
+                            } else {
+                                reject(e);
+                                xhr && xhr.abort();
+                            }
+                        }, false);
+                        xhr.addEventListener('error', function (e) {
+                            if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
+                                reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
+                            } else {
+                                reject(e);
+                            }
+                        }, false);
+                        const url = `https://${host}/apiv1`;
+                        // alert(url)
+                        xhr.open('GET', url, true);
+                        xhr.send(fd)
+                    }
+                });
+            }
+
+
             const upload = () => {
                 return new Promise((resolve, reject) => {
                     // if (!mediaFile) {
@@ -155,7 +209,7 @@
 
                         // document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
                         document.getElementById('photo').setAttribute('data-src', 'https://my135.geotab.com/apiv1/DownloadMediaFile?mediaFile={"id":"akZ_h84l6SkmxZeJnpK8KQw"}&credentials={"userName":"andrew.tolstov%40gmail.com","database":"gogps","sessionId":"0IoNjd7Q2_lUKZeUDd7csA"}')
-                        
+                        downloadFile()
                     });
                     api.call('Get', {
                             typeName: 'MediaFile',
