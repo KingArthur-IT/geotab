@@ -142,7 +142,7 @@
                         host = cr.server ? getUrl(cr.server) : document.location.hostname;
                         credentials = cr.credentials || cr;
 
-                        document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
+                        // document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
                     });
                     api.call('Get', {
                             typeName: 'MediaFile',
@@ -150,9 +150,10 @@
                         },
                        rezult => {
                             // document.getElementById('info').innerHTML = JSON.stringify(rezult);
-                            document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${rezult[rezult.length - 1].id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`)
+                            // document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${rezult[rezult.length - 1].id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`)
                        } 
-                    )
+                    );
+                    document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
                     callback();
                 },
                 focus: function(api, state) {
