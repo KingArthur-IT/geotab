@@ -33,44 +33,46 @@
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         fd.append(fileName, mediaFile, fileName);
                         
-                        xhr.addEventListener('load', function (e) {
-                            e.preventDefault();
-                            alert(`Загружено: ${xhr.status} ${xhr.response}`);
-                            alert(JSON.stringify(e))
-                            if (e.target && e.target['responseText'].length > 0) {
-                                try {
-                                    let jsonResponse = JSON.parse(e.target['responseText']);
-                                    if (!jsonResponse.error) {
-                                        document.getElementById('info').innerHTML = 'resolve';
-                                        document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
-                                        resolve(mediaFile);
-                                    } else {
-                                        reject(jsonResponse.error);
-                                    }
-                                } catch (e) {
-                                    reject(e);
-                                }
-                            } else {
-                                reject(e);
-                                xhr && xhr.abort();
-                            }
-                        }, false);
-                        xhr.addEventListener('error', function (e) {
-                            if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
-                                reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
-                            } else {
-                                reject(e);
-                            }
-                        }, false);
+                        // xhr.addEventListener('load', function (e) {
+                        //     e.preventDefault();
+                        //     alert(`Загружено: ${xhr.status} ${xhr.response}`);
+                        //     alert(JSON.stringify(e))
+                        //     if (e.target && e.target['responseText'].length > 0) {
+                        //         try {
+                        //             let jsonResponse = JSON.parse(e.target['responseText']);
+                        //             if (!jsonResponse.error) {
+                        //                 document.getElementById('info').innerHTML = 'resolve';
+                        //                 document.getElementById('photo').setAttribute('src', `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`);
+                        //                 resolve(mediaFile);
+                        //             } else {
+                        //                 reject(jsonResponse.error);
+                        //             }
+                        //         } catch (e) {
+                        //             reject(e);
+                        //         }
+                        //     } else {
+                        //         reject(e);
+                        //         xhr && xhr.abort();
+                        //     }
+                        // }, false);
+                        // xhr.addEventListener('error', function (e) {
+                        //     if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
+                        //         reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
+                        //     } else {
+                        //         reject(e);
+                        //     }
+                        // }, false);
                         const url = `https://${host}/apiv1/`;
                         // alert(url)
                         xhr.open('POST', url, true);
                         xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-                        try {
-                            xhr.send(fd)
-                        } catch (e) {
-                            reject(e);
+                        
+                        xhr.onreadystatechange = function(){
+                            if (xhr.readyState === 4)
+                                alert(`Загружено: ${xhr.status} ${xhr.response}`);
                         }
+                        
+                        xhr.send(fd)
                     }
                 });
             }
