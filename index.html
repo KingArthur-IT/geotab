@@ -103,53 +103,62 @@
                             mediaFile: { 'id': fileId }
                         }
                     };
-                    let xhr = new XMLHttpRequest();
+                    // let xhr = new XMLHttpRequest();
+
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        xhr.addEventListener('load', function (e) {
-                            alert(`Загружено: ${xhr.status} ${xhr.responseType}`);
-                            alert(JSON.stringify(e))
+                        // xhr.addEventListener('load', function (e) {
+                        //     alert(`Загружено: ${xhr.status} ${xhr.responseType}`);
+                        //     alert(JSON.stringify(e))
 
-                            var uInt8Array = new Uint8Array(xhr.response);
-                            var i = uInt8Array.length; alert('i', uInt8Array)
-                            var binaryString = new Array(i);
-                            while (i--){
-                                binaryString[i] = String.fromCharCode(uInt8Array[i]);
-                            }
-                            var data = binaryString.join(''); alert(data)
-                            var base64 = window.btoa(data);
 
-                            document.getElementById(imgTagId).src="data:image/png;base64," + base64;
-                            resolve()
+                        //     arrayBuffer()
 
-                            if (e.target && e.target['responseText'].length > 0) {
-                                try {
-                                    let jsonResponse = JSON.parse(e.target['responseText']);
-                                    if (!jsonResponse.error) {
-                                        document.getElementById(imgTagId).setAttribute('src', xhr.response);
-                                        resolve();
-                                    } else {
-                                        reject(jsonResponse.error);
-                                    }
-                                } catch (e) {
-                                    reject(e);
-                                }
-                            } else {
-                                reject(e);
-                                xhr && xhr.abort();
-                            }
-                        }, false);
-                        xhr.addEventListener('error', function (e) {
-                            if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
-                                reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
-                            } else {
-                                reject(e);
-                            }
-                        }, false);
+                        //     var uInt8Array = new Uint8Array(xhr.response);
+                        //     var i = uInt8Array.length; alert('i', uInt8Array)
+                        //     var binaryString = new Array(i);
+                        //     while (i--){
+                        //         binaryString[i] = String.fromCharCode(uInt8Array[i]);
+                        //     }
+                        //     var data = binaryString.join(''); alert(data)
+                        //     var base64 = window.btoa(data);
+
+                        //     document.getElementById(imgTagId).src="data:image/png;base64," + base64;
+                        //     resolve()
+
+                        //     if (e.target && e.target['responseText'].length > 0) {
+                        //         try {
+                        //             let jsonResponse = JSON.parse(e.target['responseText']);
+                        //             if (!jsonResponse.error) {
+                        //                 document.getElementById(imgTagId).setAttribute('src', xhr.response);
+                        //                 resolve();
+                        //             } else {
+                        //                 reject(jsonResponse.error);
+                        //             }
+                        //         } catch (e) {
+                        //             reject(e);
+                        //         }
+                        //     } else {
+                        //         reject(e);
+                        //         xhr && xhr.abort();
+                        //     }
+                        // }, false);
+                        // xhr.addEventListener('error', function (e) {
+                        //     if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
+                        //         reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
+                        //     } else {
+                        //         reject(e);
+                        //     }
+                        // }, false);
                         const url = `https://${host}/apiv1`;
                         // alert(url)
-                        xhr.open('POST', url, true);
-                        xhr.send(fd)
+                        
+                        // xhr.open('POST', url, true);
+                        // xhr.send(fd)
+
+                        fetch(url, {method: 'POST', body: fd}).then(res => {
+                            alert(res.status)
+                        })
                     }
                 });
             }
