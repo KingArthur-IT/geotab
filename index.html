@@ -62,7 +62,7 @@
                                 reject(e);
                             }
                         }, false);
-                        xhr.open('POST', `https://${host}/apiv1/UploadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`, true);
+                        xhr.open('POST', `https://my28.geotab.com/apiv1/`, true);
                         xhr.setRequestHeader('Content-Type', 'multipart/form-data');
                         try {
                             xhr.send(fd)
