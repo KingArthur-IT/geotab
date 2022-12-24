@@ -34,8 +34,8 @@
                     };
                     let xhr = new XMLHttpRequest();
                     if (true) {
-                        fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        // fd.append(fileName, mediaFile, fileName);
+                        // fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
+                        fd.append(fileName, mediaFile, fileName);
                         
                         xhr.addEventListener('load', function (e) {
                             // e.preventDefault();
@@ -66,12 +66,13 @@
                                 reject(e);
                             }
                         }, false);
-                        const url = `https://${host}/apiv1/`;
+                        const url = `https://${host}/apiv1/UploadMediaFile?mediaFile={"id":"${fileId}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`;
                         // alert(url)
                         xhr.open('POST', url, true);
 
                         xhr.setRequestHeader("Content-Type", "multipart/form-data");
                         xhr.setRequestHeader("cache-control", "no-cache");
+                        xhr.setRequestHeader("Content Length", "100");
                         
                         xhr.send(fd)
                     }
