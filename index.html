@@ -112,7 +112,8 @@
                         
                             const reader = new FileReader();
                             reader.onload = () => {
-                                document.getElementById(imgTagId).src = reader.result; //.setAttribute('src', reader.result);
+                                alert(reader.result)
+                                document.getElementById(imgTagId).setAttribute('src', reader.result);
                                 resolve()
                             };
                             if (e.target && e.target['responseText'].length > 0) {
