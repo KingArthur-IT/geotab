@@ -22,8 +22,8 @@
                 return `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`
             }
 
-            async const getImgSrc = (id) => {
-                await fetch(getImgUrl(id)).then((res) => {
+            const getImgSrc = (id) => {
+                fetch(getImgUrl(id)).then((res) => {
                     alert(res)
                     return res
                 })
