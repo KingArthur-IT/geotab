@@ -110,17 +110,17 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             alert(JSON.stringify(e))
 
-                            const reader = new FileReader()
-                            reader.onload = function(e) {
-                                alert(reader.result)
-                                let arrayBuffer = new Uint8Array(reader.result);
-                                console.log(arrayBuffer);
-                                resolve();
+                            var uInt8Array = new Uint8Array(xhr.response);
+                            var i = uInt8Array.length;
+                            var binaryString = new Array(i);
+                            while (i--){
+                                binaryString[i] = String.fromCharCode(uInt8Array[i]);
                             }
-                            reader.readAsArrayBuffer(xhr.response)
+                            var data = binaryString.join('');
+                            var base64 = window.btoa(data);
 
-                            
-                            
+                            document.getElementById(imgTagId).src="data:image/png;base64," + base64;
+                            resolve()
 
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
