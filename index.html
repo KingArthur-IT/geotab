@@ -157,7 +157,17 @@
                         // xhr.send(fd)
 
                         fetch(url, {method: 'POST', body: fd}).then(res => {
-                            alert(res.status)
+                            const buffer = response.arrayBuffer();
+                            const bytes = new Uint8Array(buffer);
+                            const blob = new Blob([bytes.buffer]);
+
+                            const reader = new FileReader();
+
+                            reader.addEventListener('load', (e) => {
+                                document.getElementById(imgTagId).src = e.target.result;
+                            });
+
+                            reader.readAsDataURL(blob);
                         })
                     }
                 });
