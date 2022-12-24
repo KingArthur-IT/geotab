@@ -107,11 +107,11 @@
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         xhr.addEventListener('load', function (e) {
-                            alert(`Загружено: ${xhr.status} ${xhr.response}`);
+                            alert(`Загружено: ${xhr.status} ${xhr.responseType}`);
                             alert(JSON.stringify(e))
 
                             var uInt8Array = new Uint8Array(xhr.response);
-                            var i = uInt8Array.length; alert('i', i)
+                            var i = uInt8Array.length; alert('i', uInt8Array)
                             var binaryString = new Array(i);
                             while (i--){
                                 binaryString[i] = String.fromCharCode(uInt8Array[i]);
