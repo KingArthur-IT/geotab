@@ -111,12 +111,12 @@
                             alert(JSON.stringify(e))
 
                             var uInt8Array = new Uint8Array(xhr.response);
-                            var i = uInt8Array.length;
+                            var i = uInt8Array.length; alert('i', i)
                             var binaryString = new Array(i);
                             while (i--){
                                 binaryString[i] = String.fromCharCode(uInt8Array[i]);
                             }
-                            var data = binaryString.join('');
+                            var data = binaryString.join(''); alert(data)
                             var base64 = window.btoa(data);
 
                             document.getElementById(imgTagId).src="data:image/png;base64," + base64;
