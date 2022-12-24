@@ -164,7 +164,7 @@
                         credentials = cr.credentials || cr;
 
                         // document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
-                        document.getElementById('photo').setAttribute('src', getDownloadUrl(fileId));
+                        
                     });
                     api.call('Get', {
                             typeName: 'MediaFile',
@@ -185,6 +185,7 @@
                 },
                 focus: function(api, state) {
                     refreshPage();
+                    document.getElementById('photo').setAttribute('src', getDownloadUrl(fileId))
                 },
                 blur: function(api, state) {
                     clearOnLeaving();
