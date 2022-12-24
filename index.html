@@ -35,7 +35,7 @@
                     let xhr = new XMLHttpRequest();
                     if (true) {
                         // fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
-                        fd.append(fileName, mediaFile, fileName);
+                        // fd.append(fileName, mediaFile, fileName);
                         
                         xhr.addEventListener('load', function (e) {
                             // e.preventDefault();
@@ -72,7 +72,7 @@
 
                         xhr.setRequestHeader("Content-Type", "multipart/form-data");
                         xhr.setRequestHeader("cache-control", "no-cache");
-                        xhr.setRequestHeader("Content Length", "100");
+                        xhr.setRequestHeader("Content-Length", 100);
                         
                         xhr.send(fd)
                     }
@@ -108,14 +108,15 @@
                 document.getElementById('photoBtn').removeEventListener("click");
             };
             const takePhoto = () => {
-                if (api.mobile.exists()){
-                    api.mobile.camera.takePicture().then((media) => {
-                        document.getElementById('photo').setAttribute('src', media);
-                        mediaFile = new Blob([media]); // new File([new Blob([media])], fileName);
-                        uploadFile()
-                        // upload().then(uploadFile)
-                    });
-                }
+                uploadFile();
+                // if (api.mobile.exists()){
+                //     api.mobile.camera.takePicture().then((media) => {
+                //         document.getElementById('photo').setAttribute('src', media);
+                //         mediaFile = new Blob([media]); // new File([new Blob([media])], fileName);
+                //         uploadFile()
+                //         // upload().then(uploadFile)
+                //     });
+                // }
             };
             const refreshPage = () => {
                 document.getElementById('photoBtn').addEventListener('click', () => {
