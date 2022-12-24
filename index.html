@@ -22,16 +22,19 @@
                 return new Promise((resolve, reject) => {
                     var fd = new FormData();
                     var parameters = {
-                        method: 'UploadMediaFile',
+                        // method: 'UploadMediaFile',
                         params: {
-                            typeName: 'MediaFile',
-                            credentials: credentials,
+                            credentials: {
+                                userName: credentials.userName,
+                                database: credentials.database,
+                                sessionId: credentials.sessionId
+                            },
                             mediaFile: { 'id': fileId }
                         }
                     };
                     let xhr = new XMLHttpRequest();
                     if (true) {
-                        fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
+                        fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters.params)));
                         fd.append(fileName, mediaFile, fileName);
                         
                         xhr.addEventListener('load', function (e) {
@@ -63,7 +66,7 @@
                                 reject(e);
                             }
                         }, false);
-                        const url = `https://${host}/apiv2`;
+                        const url = `https://${host}/apiv1/UploadMediaFile`;
                         // alert(url)
                         xhr.open('POST', url, true);
 
