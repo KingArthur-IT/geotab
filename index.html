@@ -175,7 +175,7 @@
                                if (element.status === 'Ready'){
                                     const cloneNode = document.querySelector('.info__parent').cloneNode(true);
                                     document.querySelector('.info').appendChild(cloneNode);
-                                    cloneNode.querySelector('img').setAttribute('src', getImgUrl(element.id));
+                                    cloneNode.querySelector('img').setAttribute('src', getDownloadUrl(element.id));
                                     cloneNode.querySelector('p').innerHTML = element.name;
                                }
                            });
