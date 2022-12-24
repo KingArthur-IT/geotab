@@ -110,8 +110,8 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             alert(JSON.stringify(e))
 
-                            const buffer = xhr.response.arrayBuffer();
-                            const bytes = new Uint8Array(buffer);
+                            // const buffer = xhr.response.arrayBuffer();
+                            const bytes = new Uint8Array(xhr.response);
                             const blob = new Blob([bytes.buffer]);
 
                             const reader = new FileReader();
