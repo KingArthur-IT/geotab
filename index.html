@@ -22,11 +22,11 @@
                 return `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`
             }
 
-            const getImgSrc = (id) => {
-                fetch(getImgUrl(id)).then((res) => {
-                    alert(JSON.stringify(res))
-                    return res
-                })
+            const getDownloadUrl = (id) => {
+                let userName = encodeURIComponent(credentials.userName);
+                let database = encodeURIComponent(credentials.database);
+                let sessionId = encodeURIComponent(credentials.sessionId);
+                return `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${id}"}&credentials={"userName":"${userName}","database":"${database}","sessionId":"${sessionId}"}`;
             }
 
             const uploadFile = () => {
@@ -154,7 +154,7 @@
                         credentials = cr.credentials || cr;
 
                         // document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
-                        document.getElementById('photo').setAttribute('src', getImgSrc(fileId));
+                        document.getElementById('photo').setAttribute('src', getDownloadUrl(fileId));
                     });
                     api.call('Get', {
                             typeName: 'MediaFile',
