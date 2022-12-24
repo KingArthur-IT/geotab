@@ -11,7 +11,7 @@
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
-            const fileName = 'Test6.jpeg'
+            const fileName = 'Test7.jpeg'
             const solutionId = 'aTM3MzM1N2EtMjNlYi1hMWN';
             const imgId = 'akZ_h84l6SkmxZeJnpK8KQw'
             var host = 'my135.geotab.com',
@@ -48,12 +48,12 @@
                         method: 'UploadMediaFile',
                         params: {
                             credentials: credentials,
-                            mediaFile: { 'id': imgId }
+                            mediaFile: { 'id': fileId }
                         }
                     };
                     let xhr = new XMLHttpRequest();
                     if (true) {
-                        fd.append('JSON-RPC', JSON.stringify(parameters));
+                        fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         fd.append(fileName, mediaFile, fileName);
                         
                         xhr.addEventListener('load', function (e) {
@@ -134,7 +134,8 @@
                         // upload(media);
                         document.getElementById('photo').setAttribute('src', media);
                         mediaFile = new File([new Blob([media])], fileName);
-                        uploadFile()
+                        // uploadFile()
+                        upload().then(uploadFile)
                     });
                 }
             };
