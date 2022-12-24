@@ -109,14 +109,20 @@
                         xhr.addEventListener('load', function (e) {
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             alert(JSON.stringify(e))
-                        
+
+                            const buffer = xhr.response.arrayBuffer();
+                            const bytes = new Uint8Array(buffer);
+                            const blob = new Blob([bytes.buffer]);
+
                             const reader = new FileReader();
-                            reader.readAsDataURL(xhr.response);
-                            reader.onload = () => {
-                                alert(reader.result)
-                                document.getElementById(imgTagId).setAttribute('src', reader.result);
+
+                            reader.addEventListener('load', (e) => {
+                                document.getElementById(imgTagId).setAttribute('src', e.target.result);
                                 resolve()
-                            };
+                            });
+
+                            reader.readAsDataURL(blob);
+
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
