@@ -161,7 +161,9 @@
                             resp.arrayBuffer().then(r => {
                                 alert(r)
                                 const bytes = new Uint8Array(buffer);
+                                alert(bytes)
                                 const blob = new Blob([bytes.buffer]);
+                                alert(blob)
 
                                 const reader = new FileReader();
 
@@ -276,7 +278,7 @@
     <div id="center">
         <button id="photoBtn">Take a photo</button>
         <img src="" id="photo" alt="photo">
-        <div id="info"></div>
+        <pre id="info"></pre>
         <p>List of images</p>
         <div class="info">
             <div class="info__parent">
