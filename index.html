@@ -62,7 +62,9 @@
                                 reject(e);
                             }
                         }, false);
-                        xhr.open('POST', `https://my28.geotab.com/apiv1/`, true);
+                        const url = `https://${host}/apiv1/`;
+                        alert(url)
+                        xhr.open('POST', url, true);
                         xhr.setRequestHeader('Content-Type', 'multipart/form-data');
                         try {
                             xhr.send(fd)
