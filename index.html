@@ -111,6 +111,7 @@
                             alert(JSON.stringify(e))
                         
                             const reader = new FileReader();
+                            reader.readAsDataURL(xhr.response);
                             reader.onload = () => {
                                 alert(reader.result)
                                 document.getElementById(imgTagId).setAttribute('src', reader.result);
