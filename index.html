@@ -66,12 +66,12 @@
                                 reject(e);
                             }
                         }, false);
-                        const url = `https://${host}/apiv1/`;
+                        const url = `https://${host}/apiv1`;
                         // alert(url)
                         xhr.open('POST', url, true);
 
-                        xhr.setRequestHeader("Content-Type", "multipart/form-data");
-                        xhr.setRequestHeader("cache-control", "no-cache");
+                        // xhr.setRequestHeader("Content-Type", "multipart/form-data");
+                        // xhr.setRequestHeader("cache-control", "no-cache");
                         
                         xhr.send(fd)
                     }
