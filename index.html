@@ -24,7 +24,7 @@
 
             const getImgSrc = (id) => {
                 fetch(getImgUrl(id)).then((res) => {
-                    alert(res)
+                    alert(JSON.stringify(res))
                     return res
                 })
             }
