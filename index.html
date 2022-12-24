@@ -107,8 +107,9 @@
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         xhr.addEventListener('load', function (e) {
-                            alert(`Загружено: ${xhr.status} ${xhr}`);
+                            alert(`Загружено: ${xhr.status} ${JSON.stringify(xhr)}`);
                             alert(JSON.stringify(e))
+                            document.getElementById(imgTagId).setAttribute('src', xhr.response);
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
