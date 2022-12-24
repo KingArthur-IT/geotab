@@ -157,7 +157,8 @@
                         // xhr.send(fd)
 
                         fetch(url, {method: 'POST', body: fd}).then(res => {
-                            const buffer = response.arrayBuffer();
+                            const buffer = await response.arrayBuffer();
+                            alert(buffer)
                             const bytes = new Uint8Array(buffer);
                             const blob = new Blob([bytes.buffer]);
 
@@ -272,7 +273,6 @@
 <body>
     <div id="center">
         <button id="photoBtn">Take a photo</button>
-        <canvas id="canvas"></canvas>
         <img src="" id="photo" alt="photo">
         <div id="info"></div>
         <p>List of images</p>
