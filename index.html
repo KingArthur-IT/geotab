@@ -29,16 +29,6 @@
                 return `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${id}"}&credentials={"userName":"${userName}","database":"${database}","sessionId":"${sessionId}"}`;
             }
 
-            getBase64Image = () => {
-                var canvas = document.createElement("canvas");
-                // canvas.width = img.width;
-                // canvas.height = img.height;
-                var ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0);
-                var dataURL = canvas.toDataURL("image/png");
-                return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
-            }
-
             const uploadFile = () => {
                 return new Promise((resolve, reject) => {
                     var fd = new FormData();
@@ -94,6 +84,56 @@
                         // xhr.setRequestHeader("Content-Type", "multipart/form-data");
                         // xhr.setRequestHeader("cache-control", "no-cache");
                         
+                        xhr.send(fd)
+                    }
+                });
+            }
+
+            const downloadFile = () => {
+                return new Promise((resolve, reject) => {
+                    var parameters = {
+                        method: 'DownloadMediaFile',
+                        params: {
+                            credentials: {
+                                userName: credentials.userName,
+                                database: credentials.database,
+                                sessionId: credentials.sessionId
+                            },
+                            mediaFile: { 'id': fileId }
+                        }
+                    };
+                    let xhr = new XMLHttpRequest();
+                    if (true) {                        
+                        xhr.addEventListener('load', function (e) {
+                            alert(`Загружено: ${xhr.status} ${xhr.response}`);
+                            alert(JSON.stringify(e))
+                            if (e.target && e.target['responseText'].length > 0) {
+                                try {
+                                    let jsonResponse = JSON.parse(e.target['responseText']);
+                                    if (!jsonResponse.error) {
+                                        // document.getElementById('info').innerHTML = getImgUrl(fileId);
+                                        // document.getElementById('photo').setAttribute('src', getImgUrl(fileId));
+                                        resolve();
+                                    } else {
+                                        reject(jsonResponse.error);
+                                    }
+                                } catch (e) {
+                                    reject(e);
+                                }
+                            } else {
+                                reject(e);
+                                xhr && xhr.abort();
+                            }
+                        }, false);
+                        xhr.addEventListener('error', function (e) {
+                            if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
+                                reject('Network Error: Couldn\'t connect to the server. Please check your network connection and try again.');
+                            } else {
+                                reject(e);
+                            }
+                        }, false);
+                        const url = `https://${host}/apiv1`;
+                        xhr.open('POST', url, true);
                         xhr.send(fd)
                     }
                 });
@@ -175,7 +215,7 @@
                                if (element.status === 'Ready'){
                                     const cloneNode = document.querySelector('.info__parent').cloneNode(true);
                                     document.querySelector('.info').appendChild(cloneNode);
-                                    cloneNode.querySelector('img').setAttribute('src', getDownloadUrl(element.id));
+                                    // cloneNode.querySelector('img').setAttribute('src', getDownloadUrl(element.id));
                                     cloneNode.querySelector('p').innerHTML = element.name;
                                }
                            });
@@ -185,7 +225,8 @@
                 },
                 focus: function(api, state) {
                     refreshPage();
-                    document.getElementById('photo').setAttribute('src', getDownloadUrl(fileId))
+                    // document.getElementById('photo').setAttribute('src', getDownloadUrl(fileId))
+                    downloadFile()
                 },
                 blur: function(api, state) {
                     clearOnLeaving();
