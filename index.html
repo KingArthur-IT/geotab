@@ -115,7 +115,7 @@
                             reader.onloadend = function () {
                                 document.getElementById('photo').setAttribute('src', reader.result);
                             }
-                            reader.readAsDataURL(xhr.response);
+                            reader.readAsDataURL(new File([xhr.response], fileName, { type: "image/jpeg" }));
 
                             resolve()
 
