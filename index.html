@@ -32,7 +32,7 @@
                 return result;
             }
 
-            const uploadFile = (id) => {
+            const uploadFile = () => {
                 return new Promise((resolve, reject) => {
                     var fd = new FormData();
                     var parameters = {
@@ -43,7 +43,7 @@
                                 database: credentials.database,
                                 sessionId: credentials.sessionId
                             },
-                            mediaFile: { 'id': id }
+                            mediaFile: { 'id': fileId }
                         }
                     };
                     let xhr = new XMLHttpRequest();
@@ -90,7 +90,7 @@
                 });
             }
 
-            const downloadFile = () => {
+            const downloadFile = (id) => {
                 return new Promise((resolve, reject) => {
                     var fd = new FormData();
                     var parameters = {
@@ -101,7 +101,7 @@
                                 database: credentials.database,
                                 sessionId: credentials.sessionId
                             },
-                            mediaFile: { 'id': fileId }
+                            mediaFile: { 'id': id }
                         }
                     };
                     let xhr = new XMLHttpRequest();
