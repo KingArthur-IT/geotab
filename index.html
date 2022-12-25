@@ -111,28 +111,11 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             // alert(JSON.stringify(e))
 
-                            alert(xhr.statusText)
-                            
+                            const reader = new FileReader();
+                            reader.readAsDataURL(xhr.response);
+                            reader.onloadend = () => resolve(reader.result);
 
                             // resolve()
-
-                            if (e.target && e.target['responseText'].length > 0) {
-                                try {
-                                    let jsonResponse = JSON.parse(e.target['responseText']);
-                                    if (!jsonResponse.error) {
-                                        alert('2')
-                                        // document.getElementById(imgTagId).setAttribute('src', xhr.response);
-                                        resolve();
-                                    } else {
-                                        reject(jsonResponse.error);
-                                    }
-                                } catch (e) {
-                                    reject(e);
-                                }
-                            } else {
-                                reject(e);
-                                xhr && xhr.abort();
-                            }
                         }, false);
                         xhr.addEventListener('error', function (e) {
                             if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
@@ -145,6 +128,7 @@
                         // alert(url)
                         
                         xhr.open('POST', url, true);
+                        xhr.responseType = 'blob';
                         xhr.send(fd)
 
                         // fetch(url, {method: 'POST', body: fd}).then( resp => {
@@ -236,7 +220,10 @@
 
                         // document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
                         // document.getElementById('photo').setAttribute('data-src', 'https://my135.geotab.com/apiv1/DownloadMediaFile?mediaFile={"id":"akZ_h84l6SkmxZeJnpK8KQw"}&credentials={"userName":"andrew.tolstov%40gmail.com","database":"gogps","sessionId":"0IoNjd7Q2_lUKZeUDd7csA"}')
-                        downloadFile()
+                        downloadFile().then(image => {
+                            alert(image)
+                            document.getElementById('photo').src = image
+                        })
                     });
                     api.call('Get', {
                             typeName: 'MediaFile',
