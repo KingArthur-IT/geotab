@@ -200,7 +200,6 @@
                        rezult => {
                            document.getElementById('list').innerHTML = 'Saved Images Loading ...';
                            listLength = rezult.filter(e => e.status === 'Ready').length;
-                           alert(listLength)
                            rezult.forEach((element, inx) => {
                                if (element.status === 'Ready'){
                                     const cloneNode = document.querySelector('.info__parent').cloneNode(true);
