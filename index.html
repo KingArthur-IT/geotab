@@ -111,13 +111,15 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             // alert(JSON.stringify(e))
 
-                            var reader = new FileReader();
-                            reader.onloadend = function () {
-                                document.getElementById('photo').setAttribute('src', reader.result);
-                            }
-                            reader.readAsDataURL(new File([xhr.response], fileName, { type: "image/jpeg" }));
+                            document.getElementById('photo').setAttribute('src', xhr.response);
 
-                            resolve()
+                            // var reader = new FileReader();
+                            // reader.onloadend = function () {
+                            //     document.getElementById('photo').setAttribute('src', reader.result);
+                            // }
+                            // reader.readAsDataURL(new File([xhr.response], fileName, { type: "image/jpeg" }));
+
+                            // resolve()
 
                             if (e.target && e.target['responseText'].length > 0) {
                                 try {
