@@ -32,7 +32,7 @@
                 return result;
             }
 
-            const uploadFile = () => {
+            const uploadFile = (id) => {
                 return new Promise((resolve, reject) => {
                     var fd = new FormData();
                     var parameters = {
@@ -43,7 +43,7 @@
                                 database: credentials.database,
                                 sessionId: credentials.sessionId
                             },
-                            mediaFile: { 'id': fileId }
+                            mediaFile: { 'id': id }
                         }
                     };
                     let xhr = new XMLHttpRequest();
@@ -59,7 +59,7 @@
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
                                     if (!jsonResponse.error) {
-                                        downloadFile().then(image => document.getElementById('photo').src = image);
+                                        downloadFile(fileId).then(image => document.getElementById('photo').src = image);
                                         resolve();
                                     } else {
                                         reject(jsonResponse.error);
@@ -201,7 +201,7 @@
                                     const cloneNode = document.querySelector('.info__parent').cloneNode(true);
                                     document.querySelector('.info').appendChild(cloneNode);
                                     cloneNode.querySelector('p').innerHTML = element.name;
-                                    downloadFile().then(image => cloneNode.querySelector('img').src = image)
+                                    downloadFile(element.id).then(image => cloneNode.querySelector('img').src = image)
                                }
                            });
                        } 
