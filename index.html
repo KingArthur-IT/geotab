@@ -111,21 +111,8 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             // alert(JSON.stringify(e))
 
-                            let bin = ''
-
-                            for (var i = 0; i < xhr.response.length; ++i) {
-                                bin += String.fromCharCode(xhr.response.charCodeAt(i) & 255);
-                            }
-                            document.getElementById("photo").src = "data:image/png;base64," + btoa(bin);
-
-                            // document.getElementById('photo').setAttribute('src', xhr.response);
-                            
-
-                            // var reader = new FileReader();
-                            // reader.onloadend = function () {
-                            //     document.getElementById('photo').setAttribute('src', reader.result);
-                            // }
-                            // reader.readAsDataURL(new File([xhr.response], fileName, { type: "image/jpeg" }));
+                            var imageURL = window.URL.createObjectURL(xhr.response);
+                            document.getElementById("photo").src = imageURL;
 
                             // resolve()
 
@@ -281,7 +268,6 @@
 <body>
     <div id="center">
         <button id="photoBtn">Take a photo</button>
-        <canvas id="canvas"></canvas>
         <img src="" id="photo" alt="photo">
         <pre id="info"></pre>
         <p>List of images</p>
