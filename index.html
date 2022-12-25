@@ -26,13 +26,12 @@
 
             const makeFileName = (length) => {
                 var result           = '';
-                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
                 var charactersLength = characters.length;
-                alert('1')
                 for ( var i = 0; i < length; i++ ) {
-                    alert(i)
                     result += characters.charAt(Math.floor(Math.random() * (charactersLength - 1)));
                 }
+                alert(rezult)
                 return result;
             }
 
