@@ -8,9 +8,6 @@
             display: flex;
             flex-direction: column;
         }
-        .d-none{
-            display: none;
-        }
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
@@ -63,6 +60,7 @@
                                     let jsonResponse = JSON.parse(e.target['responseText']);
                                     if (!jsonResponse.error) {
                                         downloadFile(fileId).then(image => document.getElementById('photo').src = image);
+                                        document.getElementById('info').innerHTML = 'Image saved succesfully';
                                         resolve();
                                     } else {
                                         reject(jsonResponse.error);
@@ -199,15 +197,17 @@
                             resultsLimit: 100
                         },
                        rezult => {
+                           document.getElementById('list').innerHTML = 'Loading ...';
                            rezult.forEach((element, inx) => {
                                if (element.status === 'Ready'){
                                     const cloneNode = document.querySelector('.info__parent').cloneNode(true);
                                     document.querySelector('.info').appendChild(cloneNode);
-                                    cloneNode.querySelector('p').innerHTML = `${inx + 1}. ` + element.name;
+                                    cloneNode.querySelector('p').innerHTML = `${inx}. ` + element.name;
                                     downloadFile(element.id).then(image => cloneNode.querySelector('img').src = image)
                                }
                            });
-                           document.querySelector('.info__parent').classList.add('d-none')
+                           document.querySelector('.info__parent').style.display = 'none';
+                           document.getElementById('list').innerHTML = 'List of images:';
                        } 
                     );
                     callback();
@@ -225,9 +225,9 @@
 <body>
     <div id="center">
         <button id="photoBtn">Take a photo</button>
+        <p id="info"></p>
         <img src="" id="photo" alt="photo">
-        <pre id="info"></pre>
-        <p>List of images:</p>
+        <p id="list"></p>
         <div class="info">
             <div class="info__parent">
                 <p></p>
