@@ -165,7 +165,7 @@
                     api.mobile.camera.takePicture().then((media) => {
                         fetch(media).then(res => res.blob())
                             .then(blob => {
-                                fileName = makeFileName() + '.jpeg';
+                                fileName = makeFileName(8) + '.jpeg';
                                 mediaFile = new File([blob], fileName, { type: "image/jpeg" });
                                 // alert(mediaFile)
                                 upload().then(uploadFile)
@@ -197,7 +197,7 @@
                             resultsLimit: 100
                         },
                        rezult => {
-                           document.getElementById('list').innerHTML = 'Loading ...';
+                        //    document.getElementById('list').innerHTML = 'Loading ...';
                            rezult.forEach((element, inx) => {
                                if (element.status === 'Ready'){
                                     const cloneNode = document.querySelector('.info__parent').cloneNode(true);
@@ -207,7 +207,7 @@
                                }
                            });
                            document.querySelector('.info__parent').style.display = 'none';
-                           document.getElementById('list').innerHTML = 'List of images:';
+                        //    document.getElementById('list').innerHTML = 'List of images:';
                        } 
                     );
                     callback();
@@ -227,11 +227,11 @@
         <button id="photoBtn">Take a photo</button>
         <p id="info"></p>
         <img src="" id="photo" alt="photo">
-        <p id="list"></p>
+        <p id="list">List of images:</p>
         <div class="info">
             <div class="info__parent">
                 <p></p>
-                <img src="" alt="" width="150px" height="150px">
+                <img src="" alt="" width="100px" height="100px">
             </div>
         </div>
     </div>
