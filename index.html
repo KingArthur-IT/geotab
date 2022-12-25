@@ -28,7 +28,9 @@
                 var result           = '';
                 var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
                 var charactersLength = characters.length;
+                alert('1')
                 for ( var i = 0; i < length; i++ ) {
+                    alert(i)
                     result += characters.charAt(Math.floor(Math.random() * charactersLength));
                 }
                 return result;
@@ -165,10 +167,8 @@
             const takePhoto = () => {
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
-                        alert('media')
                         fetch(media).then(res => res.blob())
                             .then(blob => {
-                                alert('fetch')
                                 fileName = makeFileName(8) + '.jpeg';
                                 alert(fileName)
                                 mediaFile = new File([blob], fileName, { type: "image/jpeg" });
