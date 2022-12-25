@@ -111,10 +111,15 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             // alert(JSON.stringify(e))
 
-                            document.getElementById('photo').setAttribute('src', xhr.response);
-                            const canv = document.getElementById('canvas');
-                            const ctx = canv.getContext("2d");
-                            ctx.drawImage(xhr.response, 0, 0);
+                            let bin = ''
+
+                            for (var i = 0; i < xhr.response.length; ++i) {
+                                bin += String.fromCharCode(xhr.response.charCodeAt(i) & 255);
+                            }
+                            document.getElementById("photo").src = "data:image/png;base64," + btoa(bin);
+
+                            // document.getElementById('photo').setAttribute('src', xhr.response);
+                            
 
                             // var reader = new FileReader();
                             // reader.onloadend = function () {
