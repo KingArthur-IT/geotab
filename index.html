@@ -111,8 +111,8 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             // alert(JSON.stringify(e))
 
-                            var imageURL = window.URL.createObjectURL(new Blob([xhr.response], {type: "image/png"}));
-                            document.getElementById("photo").src = imageURL;
+                            alert(xhr.statusText)
+                            
 
                             // resolve()
 
