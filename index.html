@@ -111,11 +111,15 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             alert(JSON.stringify(e))
 
-                            var b64Response = btoa(unescape(encodeURIComponent(xhr.response)));
+                            var b64Response = btoa(unescape(encodeURIComponent(xhr.response))).toString('base64');
+                            const blob = new Blob([xhr.response])
+                            alert(blob)
+                            const b64 = new Buffer.from(xhr.response).toString('base64');
+                            alert(b64)
                             
                             alert(b64Response)
 
-                            document.getElementById(imgTagId).src="data:image/png;base64," + b64Response;
+                            document.getElementById('photo').setAttribute('src', "data:image/png;base64," + b64Response);
                             resolve()
 
                             if (e.target && e.target['responseText'].length > 0) {
