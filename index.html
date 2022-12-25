@@ -111,7 +111,8 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             alert(JSON.stringify(e))
 
-                            var b64Response = btoa(xhr.response);
+                            var b64Response = btoa(unescape(encodeURIComponent(xhr.response)));
+                            
                             alert(b64Response)
 
                             document.getElementById(imgTagId).src="data:image/png;base64," + b64Response;
