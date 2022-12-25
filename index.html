@@ -111,10 +111,11 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             // alert(JSON.stringify(e))
 
-                            var blb = new Blob([xhr.response], {type: 'image/png'});
-                            var url = (window.URL || window.webkitURL).createObjectURL(blb);
-
-                            document.getElementById('photo').setAttribute('src', url);
+                            var reader = new FileReader();
+                            reader.onloadend = function () {
+                                document.getElementById('photo').setAttribute('src', reader.result);
+                            }
+                            reader.readAsDataURL(xhr.response);
 
                             resolve()
 
