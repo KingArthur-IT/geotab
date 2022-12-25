@@ -111,17 +111,23 @@
                             alert(`Загружено: ${xhr.status} ${xhr.response}`);
                             // alert(JSON.stringify(e))
 
-                            var b64Response = btoa(unescape(encodeURIComponent(xhr.response))).toString('base64');
-                            const blob = new Blob([xhr.response])
-                            alert(blob)
+                            // var b64Response = btoa(unescape(encodeURIComponent(xhr.response))).toString('base64');
                             
-                            var reader = new FileReader();
-                            reader.readAsDataURL(blob); 
-                            reader.onloadend = function() {
-                                var base64data = reader.result;                
-                                alert(base64data);
-                                document.getElementById('photo').setAttribute('src', base64data);
-                            }
+                            // const blob = new Blob([xhr.response])
+                            // alert(blob)
+                            
+                            // var reader = new FileReader();
+                            // reader.readAsDataURL(blob); 
+                            // reader.onloadend = function() {
+                            //     var base64data = reader.result;                
+                            //     alert(base64data);
+                            //     document.getElementById('photo').setAttribute('src', base64data);
+                            // }
+
+                            var arr = new Uint8Array(xhr.response);
+                            var raw = String.fromCharCode.apply(null,arr);
+                            var b64 = btoa(raw);
+                            document.getElementById('photo').setAttribute('src', "data:image/png;base64," + b64);
 
                             resolve()
 
