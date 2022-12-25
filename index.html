@@ -11,22 +11,25 @@
     </style>
     <script>
         geotab.addin.integrationExample = function(api, state) {
-            const fileName = 'Test6.jpeg'
+            const fileName = ''
             const solutionId = 'aTM3MzM1N2EtMjNlYi1hMWN';
             var host = 'my135.geotab.com',
                 credentials = {},
-                fileId =  'akZ_h84l6SkmxZeJnpK8KQw' //''
+                fileId =  '' //''akZ_h84l6SkmxZeJnpK8KQw
             var mediaFile
 
-            const getImgUrl = (id) => {
-                return `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`
-            }
+            // const getImgUrl = (id) => {
+            //     return `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${id}"}&credentials={"userName":"${credentials.userName}","database":"${credentials.database}","sessionId":"${credentials.sessionId}"}`
+            // }
 
-            const getDownloadUrl = (id) => {
-                let userName = encodeURIComponent(credentials.userName);
-                let database = encodeURIComponent(credentials.database);
-                let sessionId = encodeURIComponent(credentials.sessionId);
-                return `https://${host}/apiv1/DownloadMediaFile?mediaFile={"id":"${id}"}&credentials={"userName":"${userName}","database":"${database}","sessionId":"${sessionId}"}`;
+            const makeFileName = (length) => {
+                var result           = '';
+                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var charactersLength = characters.length;
+                for ( var i = 0; i < length; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                return result;
             }
 
             const uploadFile = () => {
@@ -56,9 +59,8 @@
                                 try {
                                     let jsonResponse = JSON.parse(e.target['responseText']);
                                     if (!jsonResponse.error) {
-                                        document.getElementById('info').innerHTML = getImgUrl(fileId);
-                                        document.getElementById('photo').setAttribute('src', getImgUrl(fileId));
-                                        resolve(mediaFile);
+                                        downloadFile().then(image => document.getElementById('photo').src = image);
+                                        resolve();
                                     } else {
                                         reject(jsonResponse.error);
                                     }
@@ -78,7 +80,6 @@
                             }
                         }, false);
                         const url = `https://${host}/apiv1`;
-                        // alert(url)
                         xhr.open('POST', url, true);
 
                         // xhr.setRequestHeader("Content-Type", "multipart/form-data");
@@ -89,7 +90,7 @@
                 });
             }
 
-            const downloadFile = (imgTagId = 'photo') => {
+            const downloadFile = () => {
                 return new Promise((resolve, reject) => {
                     var fd = new FormData();
                     var parameters = {
@@ -108,14 +109,12 @@
                     if (true) {
                         fd.append('JSON-RPC', encodeURIComponent(JSON.stringify(parameters)));
                         xhr.addEventListener('load', function (e) {
-                            alert(`Загружено: ${xhr.status} ${xhr.response}`);
-                            // alert(JSON.stringify(e))
+                            // alert(`Загружено: ${xhr.status}`);
 
                             const reader = new FileReader();
                             reader.readAsDataURL(xhr.response);
                             reader.onloadend = () => resolve(reader.result);
 
-                            // resolve()
                         }, false);
                         xhr.addEventListener('error', function (e) {
                             if (e.target || (e instanceof XMLHttpRequest && e.status === 0)) {
@@ -125,34 +124,13 @@
                             }
                         }, false);
                         const url = `https://${host}/apiv1`;
-                        // alert(url)
                         
                         xhr.open('POST', url, true);
                         xhr.responseType = 'blob';
                         xhr.send(fd)
-
-                        // fetch(url, {method: 'POST', body: fd}).then( resp => {
-                        //     alert(resp)
-                        //     resp.arrayBuffer().then(r => {
-                        //         alert(r)
-                        //         const bytes = new Uint8Array(buffer);
-                        //         alert(bytes)
-                        //         const blob = new Blob([bytes.buffer]);
-                        //         alert(blob)
-
-                        //         const reader = new FileReader();
-
-                        //         reader.addEventListener('load', (e) => {
-                        //             document.getElementById(imgTagId).src = e.target.result;
-                        //         });
-
-                        //         reader.readAsDataURL(blob);
-                        //     });
-                        // })
                     }
                 });
             }
-
 
             const upload = () => {
                 return new Promise((resolve, reject) => {
@@ -166,7 +144,6 @@
                             name: fileName,
                             fromDate: new Date(),
                             solutionId: solutionId,
-                            // file: mediaFile
                         }
                     }, result => {
                         alert('ok = ' + JSON.stringify(result))
@@ -175,31 +152,27 @@
                     }, reject => {
                         alert('err = ' + JSON.stringify(reject))
                     })
-                }).then(uploadFile)
+                })
             }
-
-                    
+                   
             const clearOnLeaving = () => {
                 document.getElementById('photoBtn').removeEventListener("click");
             };
+            
             const takePhoto = () => {
-                // uploadFile();
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
-                        document.getElementById('photo').setAttribute('src', media);
-                        // mediaFile = new File([new Blob([media])], fileName, {type:"image/jpeg"});
-
                         fetch(media).then(res => res.blob())
                             .then(blob => {
+                                fileName = makeFileName() + '.jpeg';
                                 mediaFile = new File([blob], fileName, { type: "image/jpeg" });
-                                alert(mediaFile)
-                                uploadFile()
+                                // alert(mediaFile)
+                                upload().then(uploadFile)
                             });
-                        
-                        // upload().then(uploadFile)
                     });
                 }
             };
+            
             const refreshPage = () => {
                 document.getElementById('photoBtn').addEventListener('click', () => {
                     takePhoto();
@@ -217,13 +190,6 @@
                         };
                         host = cr.server ? getUrl(cr.server) : document.location.hostname;
                         credentials = cr.credentials || cr;
-
-                        // document.getElementById('info').innerHTML = `host = ${host}` + JSON.stringify(credentials)
-                        // document.getElementById('photo').setAttribute('data-src', 'https://my135.geotab.com/apiv1/DownloadMediaFile?mediaFile={"id":"akZ_h84l6SkmxZeJnpK8KQw"}&credentials={"userName":"andrew.tolstov%40gmail.com","database":"gogps","sessionId":"0IoNjd7Q2_lUKZeUDd7csA"}')
-                        downloadFile().then(image => {
-                            alert(image)
-                            document.getElementById('photo').src = image
-                        })
                     });
                     api.call('Get', {
                             typeName: 'MediaFile',
@@ -234,8 +200,8 @@
                                if (element.status === 'Ready'){
                                     const cloneNode = document.querySelector('.info__parent').cloneNode(true);
                                     document.querySelector('.info').appendChild(cloneNode);
-                                    // cloneNode.querySelector('img').setAttribute('src', getDownloadUrl(element.id));
                                     cloneNode.querySelector('p').innerHTML = element.name;
+                                    downloadFile().then(image => cloneNode.querySelector('img').src = image)
                                }
                            });
                        } 
@@ -257,7 +223,7 @@
         <button id="photoBtn">Take a photo</button>
         <img src="" id="photo" alt="photo">
         <pre id="info"></pre>
-        <p>List of images</p>
+        <p>List of images:</p>
         <div class="info">
             <div class="info__parent">
                 <p></p>
