@@ -165,8 +165,10 @@
             const takePhoto = () => {
                 if (api.mobile.exists()){
                     api.mobile.camera.takePicture().then((media) => {
+                        alert('media')
                         fetch(media).then(res => res.blob())
                             .then(blob => {
+                                alert('fetch')
                                 fileName = makeFileName(8) + '.jpeg';
                                 alert(fileName)
                                 mediaFile = new File([blob], fileName, { type: "image/jpeg" });
@@ -200,7 +202,7 @@
                             resultsLimit: 100
                         },
                        rezult => {
-                           document.getElementById('list').innerHTML = 'Loading ...';
+                           document.getElementById('list').innerHTML = 'Saved Images Loading ...';
                            listLength = rezult.filter(e => e.status === 'Ready').length;
                            rezult.forEach((element, inx) => {
                                if (element.status === 'Ready'){
