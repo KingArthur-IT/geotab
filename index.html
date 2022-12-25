@@ -199,9 +199,9 @@
                         },
                        rezult => {
                            document.getElementById('list').innerHTML = 'Saved Images Loading ...';
-                           listLength = rezult.filter(e => e.status === 'Ready').length;
+                           listLength = rezult.filter(e => e.status === 'Ready' && e.solutionId === solutionId).length;
                            rezult.forEach((element, inx) => {
-                               if (element.status === 'Ready'){
+                               if (element.status === 'Ready' && element.solutionId === solutionId){
                                     const cloneNode = document.querySelector('.info__parent').cloneNode(true);
                                     document.querySelector('.info').appendChild(cloneNode);
                                     cloneNode.querySelector('p').innerHTML = `${inx}. ` + element.name;
