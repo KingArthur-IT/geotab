@@ -114,10 +114,13 @@
                             var b64Response = btoa(unescape(encodeURIComponent(xhr.response))).toString('base64');
                             const blob = new Blob([xhr.response])
                             alert(blob)
-                            const b64 = new Buffer.from(xhr.response).toString('base64');
-                            alert(b64)
                             
-                            alert(b64Response)
+                            var reader = new FileReader();
+                            reader.readAsDataURL(blob); 
+                            reader.onloadend = function() {
+                                var base64data = reader.result;                
+                                alert(base64data);
+                            }
 
                             document.getElementById('photo').setAttribute('src', "data:image/png;base64," + b64Response);
                             resolve()
