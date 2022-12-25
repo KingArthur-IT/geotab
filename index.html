@@ -112,6 +112,9 @@
                             // alert(JSON.stringify(e))
 
                             document.getElementById('photo').setAttribute('src', xhr.response);
+                            const canv = document.getElementById('canvas');
+                            const ctx = canv.getContext("2d");
+                            ctx.drawImage(xhr.response, 0, 0);
 
                             // var reader = new FileReader();
                             // reader.onloadend = function () {
@@ -273,6 +276,7 @@
 <body>
     <div id="center">
         <button id="photoBtn">Take a photo</button>
+        <canvas id="canvas"></canvas>
         <img src="" id="photo" alt="photo">
         <pre id="info"></pre>
         <p>List of images</p>
